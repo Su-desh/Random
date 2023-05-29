@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "17134732223",
+    "project_id": "random-49876",
+    "storage_bucket": "random-49876.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17134732223:android:9d888920f6b55a6ad5170a",
+        "android_client_info": {
+          "package_name": "com.Ampereflow.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcgrFQo5lUmJ-A-MdwS1H1nnN49sjTqBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
