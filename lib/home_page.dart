@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:random/screens/chat_screen.dart';
 import 'package:random/screens/home_screen.dart';
 import 'package:random/screens/people_screen.dart';
+import 'package:random/side_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-      drawer: const Drawer(),
+      drawer:const SideDrawer(),
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Random'),
