@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:random/conversation/chat_list.dart';
+import 'package:random/widgets/conversation_card.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,52 +25,53 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
-            ConversationList(
-                name: 'Sudesh',
+            conversationCardWidget(
+                name: 'Sudesh ',
                 isMessageRead: true,
                 time: 'Today',
                 messageText: 'Hello'),
-            ConversationList(
-                name: 'Manish',
+            conversationCardWidget(
+                name: 'Manish ',
                 isMessageRead: false,
                 time: 'Now',
-                messageText: 'How are you ?'),
-            ConversationList(
+                messageText:
+                    'How are you ? i am just testing a feature sl;jkfddd'),
+            conversationCardWidget(
                 name: 'Chetan',
                 isMessageRead: true,
                 time: 'Today',
                 messageText: 'Where '),
-            ConversationList(
+            conversationCardWidget(
                 name: 'Zaheer',
                 isMessageRead: false,
                 time: 'Yesterday',
                 messageText: 'What'),
-            ConversationList(
+            conversationCardWidget(
                 name: 'Nithin',
                 isMessageRead: false,
                 time: 'Today',
                 messageText: 'Text me'),
-            ConversationList(
+            conversationCardWidget(
                 name: 'Pradeep',
                 isMessageRead: true,
                 time: 'Now',
                 messageText: 'Send '),
-            ConversationList(
+            conversationCardWidget(
                 name: 'Anji',
                 isMessageRead: false,
                 time: '28 mar',
                 messageText: 'Update'),
-            ConversationList(
+            conversationCardWidget(
                 name: 'Amar',
                 isMessageRead: true,
                 time: '5 Feb',
                 messageText: 'Hello'),
-            ConversationList(
+            conversationCardWidget(
                 name: 'Mohan',
                 isMessageRead: false,
                 time: 'Today',
                 messageText: 'Hi'),
-            ConversationList(
+            conversationCardWidget(
                 name: 'Sujan',
                 isMessageRead: true,
                 time: '6 Mar',

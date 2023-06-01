@@ -25,9 +25,9 @@ class _LogInScreenState extends State<LogInScreen> {
 
     //Check if is login or register
     if (_isLogin) {
-      await Auth().signInWithEmailAndPassword(email, password);
+    //  await Auth().signInWithEmailAndPassword(email, password);
     } else {
-      await Auth().registerWithEmailAndPassword(email, password);
+    //  await Auth().registerWithEmailAndPassword(email, password);
     }
 
     setState(() => _loading = false);

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:random/home_page.dart';
 
-import 'auth/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +14,6 @@ void main() async {
       .then((value) => runApp(const Random()));
 }
 
-Auth auth = Auth();
 final db = FirebaseFirestore.instance;
 
 class Random extends StatelessWidget {
@@ -26,16 +24,7 @@ class Random extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(useMaterial3: true),
-      // home: StreamBuilder<User?>(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       return const HomePage();
-      //     } else {
-      //       return const AuthScreen();
-      //     }
-      //   },
-      // ),
+    
       home: const HomePage(),
     );
   }
