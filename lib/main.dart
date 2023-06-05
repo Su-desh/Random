@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:random/auth/signin.dart';
 import 'package:random/home_page.dart';
 
+import 'auth/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,18 +17,31 @@ void main() async {
       .then((value) => runApp(const Random()));
 }
 
-final db = FirebaseFirestore.instance;
+AuthService authService = AuthService();
+FirebaseFirestore firestoreDB = FirebaseFirestore.instance;
 
-class Random extends StatelessWidget {
+class Random extends StatefulWidget {
   const Random({super.key});
 
+  @override
+  State<Random> createState() => _RandomState();
+}
+
+class _RandomState extends State<Random> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(useMaterial3: true),
-    
-      home: const HomePage(),
+      home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const HomePage();
+            } else {
+              return const SignInScreen();
+            }
+          }),
     );
   }
 }

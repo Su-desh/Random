@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:store_redirect/store_redirect.dart';
 
@@ -71,10 +72,11 @@ class SideDrawer extends StatelessWidget {
               Row(children: <Widget>[
                 Expanded(
                     child: TextButton.icon(
-                  icon: const Icon(Icons.add_box),
-                  label: const Text('     More Apps     '),
+                  icon: const Icon(Icons.logout),
+                  label: const Text('     Sign out     '),
                   onPressed: () {
                     Get.back();
+                    authService.signOutThisUser();
                   },
                 ))
               ]),
