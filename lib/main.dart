@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:random/API/api.dart';
 import 'package:random/auth/signin.dart';
 import 'package:random/home_page.dart';
 
@@ -17,7 +18,9 @@ void main() async {
       .then((value) => runApp(const Random()));
 }
 
+APIs apis = APIs();
 AuthService authService = AuthService();
+FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 FirebaseFirestore firestoreDB = FirebaseFirestore.instance;
 
 class Random extends StatefulWidget {

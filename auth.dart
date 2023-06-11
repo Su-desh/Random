@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:random/main.dart';
 
 class AuthService {
   //sign out user
   Future<void> signOutThisUser() async {
-    await firebaseAuth.signOut();
+    await FirebaseAuth.instance.signOut();
   }
 
   //register new user
@@ -13,7 +12,7 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -37,7 +36,7 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

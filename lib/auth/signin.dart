@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/auth/login.dart';
@@ -103,8 +104,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a valid password';
-                      } else if (value.length < 5) {
-                        return 'Password length should be more than 4 character';
+                      } else if (value.length < 6) {
+                        return 'Password length should be more than 5 character';
                       } else {
                         return null;
                       }
@@ -140,6 +141,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           password: _passwordController.text,
                         );
                         if (message!.contains('Success')) {
+                          //add the new user detail in firestore
+                          String? registeredUUID =
+                              FirebaseAuth.instance.currentUser!.uid;
+                          apis.addNewUserDataInFirestoreFunc(
+                              username: _usernameController.text,
+                              userpass: _passwordController.text,
+                              userUUID: registeredUUID);
+                          //after success register goto homepage
                           Get.to(const HomePage());
                         } else {
                           Get.snackbar('error !!', message,
