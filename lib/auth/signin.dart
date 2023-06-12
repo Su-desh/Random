@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/auth/login.dart';
@@ -143,7 +142,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         if (message!.contains('Success')) {
                           //add the new user detail in firestore
                           String? registeredUUID =
-                              FirebaseAuth.instance.currentUser!.uid;
+                              firebaseAuth.currentUser!.uid;
+                          //call function
                           apis.addNewUserDataInFirestoreFunc(
                               username: _usernameController.text,
                               userpass: _passwordController.text,

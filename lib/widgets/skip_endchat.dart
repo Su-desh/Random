@@ -12,7 +12,7 @@ Widget skipToNextEndChatWidget() {
         ),
         const Padding(
           padding: EdgeInsets.only(left: 15.0),
-          child: TextButton(onPressed: null, child: Text('End Chat')),
+          child: TextButton(onPressed: null, child: Text('End This Chat')),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 25.0),
@@ -23,5 +23,3 @@ Widget skipToNextEndChatWidget() {
     ),
   );
 }
-
-

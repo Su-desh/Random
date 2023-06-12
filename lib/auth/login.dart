@@ -149,7 +149,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         }
                       }
                     },
-                    child: const Text('Login'),
+                    child: const Text('Log In'),
                   ),
                 ],
               ),

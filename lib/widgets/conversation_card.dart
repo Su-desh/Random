@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:random/chatting_screen.dart';
+import 'package:random/chat/chatting_screen.dart';
 
 Widget conversationCardWidget(
     {required String name,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:random/main.dart';
 import 'package:random/widgets/friend_card.dart';
 
 class PeopleScreen extends StatelessWidget {
@@ -25,16 +26,25 @@ class PeopleScreen extends StatelessWidget {
                 ),
               ),
             ),
-            friendCardWidget(username: 'Sudesh Sudesh sudesh sudesh'),
-            friendCardWidget(username: 'Manish'),
-            friendCardWidget(username: 'Chetan slfjakkkkkfsfsdf'),
-            friendCardWidget(username: 'Zaheer'),
-            friendCardWidget(username: 'Nithin'),
-            friendCardWidget(username: 'Pradeep'),
-            friendCardWidget(username: 'Anji'),
-            friendCardWidget(username: 'Amar'),
-            friendCardWidget(username: 'Mohan'),
-            friendCardWidget(username: 'Sujan'),
+            FutureBuilder(
+                future: apis.getAllFriendsForThisUserFunc(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData &&
+                      snapshot.connectionState == ConnectionState.done) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return friendCardWidget(
+                            username: snapshot.data?[index] ?? 'username');
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: Text('friend list is empty'),
+                    );
+                  }
+                })
           ],
         ),
       ),

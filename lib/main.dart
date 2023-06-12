@@ -37,7 +37,7 @@ class _RandomState extends State<Random> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(useMaterial3: true),
       home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
+          stream: firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return const HomePage();

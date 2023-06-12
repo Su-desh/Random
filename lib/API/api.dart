@@ -32,4 +32,23 @@ class APIs {
       print('this is the catch error $e');
     }
   }
+
+//get all the friend of current user
+  Future<List> getAllFriendsForThisUserFunc() async {
+    String currentUserUid = firebaseAuth.currentUser!.uid;
+    List friendsUidList = [];
+
+    await usersReference
+        .where('user_UID', isEqualTo: currentUserUid)
+        .get()
+        .then(
+      (result) {
+        friendsUidList = result.docs[0].data()['friends_list'];
+
+        print("Success $friendsUidList");
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    return friendsUidList;
+  }
 }

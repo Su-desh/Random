@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:random/widgets/skip_endchat.dart';
 
-import 'widgets/chat_input.dart';
+import '../widgets/chat_input.dart';
 
-class NewChatScreen extends StatelessWidget {
-  const NewChatScreen({super.key});
+class ChattingScreen extends StatelessWidget {
+  const ChattingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Random'),
+        title: const Text('no name'),
         bottom: const PreferredSize(
           preferredSize: Size.zero,
           child: Text("Online"),
@@ -24,7 +23,6 @@ class NewChatScreen extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              skipToNextEndChatWidget(),
               chatInputWidget(),
             ],
           ))
