@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/general/splash_screen.dart';
 import 'package:random/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:store_redirect/store_redirect.dart';
@@ -74,9 +75,13 @@ class SideDrawer extends StatelessWidget {
                     child: TextButton.icon(
                   icon: const Icon(Icons.logout),
                   label: const Text('     Sign out     '),
-                  onPressed: () {
+                  onPressed: () async {
                     Get.back();
-                    authService.signOutThisUser();
+                    await authService.signOutThisUser();
+                    //to refresh the loggedin screen , stream builder in main.dart is not
+                    //giving expected output that's why going to splash screen from here
+                    //in future i will find the exact solution using streambuilder of main.dart
+                    Get.to(const SplashScreen());
                   },
                 ))
               ]),

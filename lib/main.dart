@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:random/API/api.dart';
-import 'package:random/auth/signin.dart';
-import 'package:random/home_page.dart';
+import 'package:random/general/splash_screen.dart';
 
 import 'auth/auth.dart';
 
@@ -40,9 +39,11 @@ class _RandomState extends State<Random> {
           stream: firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const HomePage();
+              //return const HomePage();
+              return const SplashScreen();
             } else {
-              return const SignInScreen();
+              //return const SignInScreen();
+              return const SplashScreen();
             }
           }),
     );

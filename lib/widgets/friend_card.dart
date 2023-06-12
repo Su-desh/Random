@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:random/screens/conversation_screen.dart';
+import 'package:random/chat/chatting_screen.dart';
 import 'package:random/widgets/more_vert.dart';
 
 Widget friendCardWidget({required String username}) {
   return GestureDetector(
     onTap: () {
-      Get.to(const ChatScreen());
+      Get.to(const ChattingScreen());
     },
     child: Container(
       padding: const EdgeInsets.all(10.0),

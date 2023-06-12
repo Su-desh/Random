@@ -7,26 +7,28 @@ class ChattingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('no name'),
-        bottom: const PreferredSize(
-          preferredSize: Size.zero,
-          child: Text("Online"),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('no name'),
+          bottom: const PreferredSize(
+            preferredSize: Size.zero,
+            child: Text("Online"),
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Container(),
-          Expanded(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              chatInputWidget(),
-            ],
-          ))
-        ],
+        body: Column(
+          children: [
+            Container(),
+            Expanded(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                chatInputWidget(),
+              ],
+            ))
+          ],
+        ),
       ),
     );
   }
