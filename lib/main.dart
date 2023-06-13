@@ -32,6 +32,12 @@ class Random extends StatefulWidget {
 
 class _RandomState extends State<Random> {
   @override
+  void initState() {
+    apis.getTheCurrentUsername();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,

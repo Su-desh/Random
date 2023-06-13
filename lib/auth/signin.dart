@@ -16,6 +16,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool isPressedSignin = false;
+
   // show or hide password
   final textFieldFocusNode = FocusNode();
   bool _obscured = true;
@@ -127,37 +129,52 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        String emailfromUsername =
-                            '${_usernameController.text}@gmail.com';
-                        final message = await authService.registration(
-                          email: emailfromUsername,
-                          password: _passwordController.text,
-                        );
-                        if (message!.contains('Success')) {
-                          //add the new user detail in firestore
-                          String? registeredUUID =
-                              firebaseAuth.currentUser!.uid;
-                          //call function
-                          apis.addNewUserDataInFirestoreFunc(
-                              username: _usernameController.text,
-                              userpass: _passwordController.text,
-                              userUUID: registeredUUID);
-                          //after success register goto homepage
-                          Get.to(const HomePage());
-                        } else {
-                          Get.snackbar('error !!', message,
-                              backgroundColor: Colors.blue);
-                        }
-                      }
-                    },
-                    child: const Text('Sign In'),
-                  ),
+                  !isPressedSignin
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              //the button is pressed
+
+                              setState(() {
+                                isPressedSignin = true;
+                              });
+                              String emailfromUsername =
+                                  '${_usernameController.text}@gmail.com';
+                              final message = await authService.registration(
+                                email: emailfromUsername,
+                                password: _passwordController.text,
+                              );
+                              if (message!.contains('Success')) {
+                                //call function
+                                await apis.createUser(
+                                  username: _usernameController.text,
+                                  userpass: _passwordController.text,
+                                );
+                                //set the username in Drawer when new user acc is created
+                                await apis.getTheCurrentUsername();
+                                //after success register goto homepage
+                                Get.to(const HomePage());
+                              } else {
+                                //error occured
+                                setState(() {
+                                  isPressedSignin = false;
+                                });
+                                Get.snackbar('error !!', message,
+                                    backgroundColor: Colors.blue);
+                              }
+                            }
+                          },
+                          child: const Text('Sign In'),
+                        )
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () {},
+                          child: const Text("Please wait..")),
                   Padding(
                     padding: const EdgeInsets.all(25.0),
                     child: GestureDetector(

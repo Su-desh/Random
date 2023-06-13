@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:random/chat/chatting_screen.dart';
 
 Widget conversationCardWidget(
     {required String name,
@@ -9,7 +7,7 @@ Widget conversationCardWidget(
     required bool isMessageRead}) {
   return GestureDetector(
     onTap: () {
-      Get.to(const ChattingScreen());
+      // Get.to( ChattingScreenPage(user: ,));
     },
     child: Container(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),

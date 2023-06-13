@@ -20,6 +20,9 @@ dependencies:
   store_redirect: ^2.0.1
   cloud_firestore: ^4.7.1
   cupertino_icons: ^1.0.2
+  firebase_storage: ^11.2.2
+  emoji_picker_flutter: ^1.6.1
+  cached_network_image: ^3.2.3
   
   
 

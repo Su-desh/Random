@@ -1,59 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/chat/chatting_screen.dart';
+import 'package:random/main.dart';
+import 'package:random/models/chat_user.dart';
+import 'package:random/screens/conversation_screen.dart';
 import 'package:random/widgets/more_vert.dart';
 
-Widget friendCardWidget({required String username}) {
-  return GestureDetector(
-    onTap: () {
-      Get.to(const ChattingScreen());
-    },
-    child: Container(
-      padding: const EdgeInsets.all(10.0),
-      height: 120,
-      child: Card(
-          // elevation: 10,
-          color: Colors.blue,
-          child: Row(children: <Widget>[
-            Expanded(
-                child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.green,
-                    maxRadius: 20,
-                    child: Text(
-                      username[0],
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 16,
-                ),
-                Flexible(
+Widget friendCardWidget({required context, required String uid}) {
+  return Container(
+    padding: const EdgeInsets.all(10.0),
+    height: 120,
+    child: Card(
+        // elevation: 10,
+        color: Colors.blue,
+        child: FutureBuilder(
+          future: apis.getTheFriendUserNameUsingId(uid),
+          builder: (_, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
                   child: Text(
-                    username,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                ),
-              ],
-            )),
-            GestureDetector(
-              onTap: () {
-                moreVertBottomSheetWidget();
-              },
-              child: const Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Icon(Icons.more_vert),
-              ),
-            )
-          ])),
-    ),
+                'username',
+                style: TextStyle(fontSize: 20),
+              ));
+            } else {
+              return GestureDetector(
+                onTap: () async {
+                  ChatUser testinguser;
+                  await apis.usersReference.doc(uid).get().then((res) {
+                    testinguser = ChatUser.fromJson(res.data()!);
+                    Get.to(ChattingScreenPage(
+                      user: testinguser,
+                    ));
+                  });
+                  // ChatUser testingUser =
+                  // await apis.createNewConversationFunc(
+                  //     fromUID: 'fromUID',
+                  //     recieverUID: 'recieverUID',
+                  //     fromName: 'sudesh',
+                  //     recieverName: 'manish');
+                },
+                child: Row(children: <Widget>[
+                  Expanded(
+                      child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.green,
+                          maxRadius: 20,
+                          child: Text(
+                            snapshot.data![0],
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Flexible(
+                        child: Text(
+                          snapshot.data!,
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                      ),
+                    ],
+                  )),
+                  GestureDetector(
+                    onTap: () {
+                      showBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          builder: (builder) {
+                            return moreVertBottomSheetWidget();
+                          });
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Icon(Icons.more_vert),
+                    ),
+                  )
+                ]),
+              );
+            }
+          },
+        )),
   );
 }

@@ -9,7 +9,7 @@ Widget moreVertBottomSheetWidget() {
             end: Alignment.centerRight,
             colors: [Colors.black87, Colors.lightBlue])),
     width: Get.size.width * 1,
-    height: 300,
+    height: 200,
     child: Column(
       children: [
         const Padding(
@@ -31,7 +31,9 @@ Widget moreVertBottomSheetWidget() {
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            
+          },
         ),
         GestureDetector(
             child: const Padding(
@@ -57,7 +59,9 @@ Widget moreVertBottomSheetWidget() {
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            Get.back();
+          },
         )
       ],
     ),

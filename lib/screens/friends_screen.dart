@@ -29,19 +29,27 @@ class PeopleScreen extends StatelessWidget {
             FutureBuilder(
                 future: apis.getAllFriendsForThisUserFunc(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData &&
-                      snapshot.connectionState == ConnectionState.done) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return friendCardWidget(
-                            username: snapshot.data?[index] ?? 'username');
-                      },
-                    );
+                  if (snapshot.hasData) {
+                    if (snapshot.data!.isNotEmpty) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return friendCardWidget(
+                              context: context,
+                              uid: snapshot.data![index]);
+                        },
+                      );
+                    } else {
+                      return const Center(
+                          child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text("Friends list is empty"),
+                      ));
+                    }
                   } else {
                     return const Center(
-                      child: Text('friend list is empty'),
+                      child: CircularProgressIndicator(),
                     );
                   }
                 })

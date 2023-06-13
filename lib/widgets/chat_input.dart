@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:random/main.dart';
 
 Widget chatInputWidget() {
+  final TextEditingController _msgController = TextEditingController();
+
   return Padding(
     padding: EdgeInsets.symmetric(
         vertical: Get.height * .01, horizontal: Get.width * .025),
@@ -26,7 +30,7 @@ Widget chatInputWidget() {
 
                 Expanded(
                     child: TextField(
-                  // controller: _textController,
+                  controller: _msgController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   onTap: () {
@@ -57,18 +61,7 @@ Widget chatInputWidget() {
         //send message button
         MaterialButton(
           onPressed: () {
-            // if (_textController.text.isNotEmpty) {
-            //   if (_list.isEmpty) {
-            //     //on first message (add user to my_user collection of chat user)
-            //     APIs.sendFirstMessage(
-            //         widget.user, _textController.text, Type.text);
-            //   } else {
-            //     //simply send message
-            //     APIs.sendMessage(
-            //         widget.user, _textController.text, Type.text);
-            //   }
-            //   _textController.text = '';
-            // }
+            apis.sendNewMessageFunc(message: _msgController.text);
           },
           minWidth: 0,
           padding:
