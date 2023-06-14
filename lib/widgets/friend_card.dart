@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:random/chat/chatting_screen.dart';
 import 'package:random/main.dart';
 import 'package:random/models/chat_user.dart';
-import 'package:random/screens/conversation_screen.dart';
 import 'package:random/widgets/more_vert.dart';
 
 Widget friendCardWidget({required context, required String uid}) {
@@ -25,19 +24,11 @@ Widget friendCardWidget({required context, required String uid}) {
             } else {
               return GestureDetector(
                 onTap: () async {
-                  ChatUser testinguser;
+                  ChatUser chatWith;
                   await apis.usersReference.doc(uid).get().then((res) {
-                    testinguser = ChatUser.fromJson(res.data()!);
-                    Get.to(ChattingScreenPage(
-                      user: testinguser,
-                    ));
+                    chatWith = ChatUser.fromJson(res.data()!);
+                    Get.to(ChattingScreenPage(user: chatWith));
                   });
-                  // ChatUser testingUser =
-                  // await apis.createNewConversationFunc(
-                  //     fromUID: 'fromUID',
-                  //     recieverUID: 'recieverUID',
-                  //     fromName: 'sudesh',
-                  //     recieverName: 'manish');
                 },
                 child: Row(children: <Widget>[
                   Expanded(

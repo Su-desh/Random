@@ -188,9 +188,9 @@ class APIs {
         .doc(message.sent)
         .delete();
 
-    // if (message.type == Type.image) {
-    //   await storage.refFromURL(message.msg).delete();
-    // }
+    if (message.type == Type.image) {
+      await storage.refFromURL(message.msg).delete();
+    }
   }
 
   //update message
@@ -220,5 +220,15 @@ class APIs {
     //updating image in firestore database
     final imageUrl = await ref.getDownloadURL();
     await sendMessage(chatUser, imageUrl, Type.image);
+  }
+
+  //get only last message of a specific chat
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(
+      ChatUser user) {
+    return firestoreDB
+        .collection('chats/${getConversationID(user.user_UID)}/messages/')
+        .orderBy('sent', descending: true)
+        .limit(1)
+        .snapshots();
   }
 }

@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -52,12 +51,11 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
           child: Scaffold(
             //app bar
             appBar: AppBar(
+              backgroundColor: const Color.fromARGB(45, 135, 130, 129),
               automaticallyImplyLeading: false,
               flexibleSpace: _appBar(),
             ),
-
-            backgroundColor: const Color.fromARGB(255, 234, 248, 255),
-
+            backgroundColor: const Color.fromARGB(255, 26, 101, 139),
             //body
             body: Column(
               children: [
@@ -115,7 +113,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
                 //show emojis on keyboard emoji button click & vice versa
                 if (_showEmoji)
                   SizedBox(
-                    height: Get.height * .35,
+                    height: Get.height * 0.35,
                     child: EmojiPicker(
                       textEditingController: _textController,
                       config: Config(
@@ -135,80 +133,74 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
 
   // app bar widget
   Widget _appBar() {
-    return InkWell(
-        onTap: () {
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (_) => ViewProfileScreen(user: widget.user)));
-        },
-        child: StreamBuilder(
-            stream: APIs.getUserInfo(widget.user),
-            builder: (context, snapshot) {
-              final data = snapshot.data?.docs;
-              final list =
-                  data?.map((e) => ChatUser.fromJson(e.data())).toList() ?? [];
+    return StreamBuilder(
+        stream: APIs.getUserInfo(widget.user),
+        builder: (context, snapshot) {
+          final data = snapshot.data?.docs;
+          final list =
+              data?.map((e) => ChatUser.fromJson(e.data())).toList() ?? [];
 
-              return Row(
+          return Row(
+            children: [
+              //back button
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back_sharp,
+                        color: Colors.black54)),
+              ),
+
+              //user profile picture
+              ClipRRect(
+                  child: CircleAvatar(
+                child: Text(widget.user.username[0]),
+              )),
+
+              //for adding some space
+              const SizedBox(width: 10),
+
+              //user name & last seen time
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //back button
-                  IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon:
-                          const Icon(Icons.arrow_back, color: Colors.black54)),
-
-                  //user profile picture
-                  const ClipRRect(
-                      child: CircleAvatar(
-                    child: Icon(CupertinoIcons.person),
-                  )),
+                  //user name
+                  Text(
+                      list.isNotEmpty ? list[0].username : widget.user.username,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500)),
 
                   //for adding some space
-                  const SizedBox(width: 10),
+                  const SizedBox(height: 2),
 
-                  //user name & last seen time
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //user name
-                      Text(
-                          list.isNotEmpty
-                              ? list[0].username
-                              : widget.user.username,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500)),
-
-                      //for adding some space
-                      const SizedBox(height: 2),
-
-                      //last seen time of user
-                      Text(
-                          list.isNotEmpty
-                              ? list[0].is_online
-                                  ? 'Online'
-                                  : MyDateUtil.getLastActiveTime(
-                                      context: context,
-                                      lastActive: list[0].last_seen)
+                  //last seen time of user
+                  Text(
+                      list.isNotEmpty
+                          ? list[0].is_online
+                              ? 'Online'
                               : MyDateUtil.getLastActiveTime(
                                   context: context,
-                                  lastActive: widget.user.last_seen),
-                          style: const TextStyle(
-                              fontSize: 13, color: Colors.black54)),
-                    ],
-                  )
+                                  lastActive: list[0].last_seen)
+                          : MyDateUtil.getLastActiveTime(
+                              context: context,
+                              lastActive: widget.user.last_seen),
+                      style:
+                          const TextStyle(fontSize: 13, color: Colors.black)),
                 ],
-              );
-            }));
+              )
+            ],
+          );
+        });
   }
 
   // bottom chat input field
   Widget _chatInput() {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: Get.height * .01, horizontal: Get.width * .025),
+          vertical: Get.height * 0.01, horizontal: Get.width * 0.025),
       child: Row(
         children: [
           //input field & buttons
@@ -248,11 +240,11 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
 
                         // Picking multiple images
                         final List<XFile> images =
-                            await picker.pickMultiImage(imageQuality: 70);
+                            await picker.pickMultiImage(imageQuality: 40);
 
                         // uploading & sending image one by one
                         for (var i in images) {
-                          log('Image Path: ${i.path}');
+                          print('Image Path: ${i.path}');
                           setState(() => _isUploading = true);
                           await APIs.sendChatImage(widget.user, File(i.path));
                           setState(() => _isUploading = false);
@@ -268,7 +260,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
 
                         // Pick an image
                         final XFile? image = await picker.pickImage(
-                            source: ImageSource.camera, imageQuality: 70);
+                            source: ImageSource.camera, imageQuality: 40);
                         if (image != null) {
                           log('Image Path: ${image.path}');
                           setState(() => _isUploading = true);
@@ -282,7 +274,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
                           color: Colors.blueAccent, size: 26)),
 
                   //adding some space
-                  SizedBox(width: Get.width * .02),
+                  SizedBox(width: Get.width * 0.02),
                 ],
               ),
             ),
@@ -301,7 +293,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
                 const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
             shape: const CircleBorder(),
             color: Colors.green,
-            child: const Icon(Icons.send, color: Colors.white, size: 28),
+            child: const Icon(Icons.send, color: Colors.white, size: 30),
           )
         ],
       ),
