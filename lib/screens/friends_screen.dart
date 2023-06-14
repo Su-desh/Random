@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:random/main.dart';
+import 'package:random/API/api.dart';
 import 'package:random/widgets/friend_card.dart';
 
 class PeopleScreen extends StatelessWidget {
@@ -27,7 +27,7 @@ class PeopleScreen extends StatelessWidget {
               ),
             ),
             FutureBuilder(
-                future: apis.getAllFriendsForThisUserFunc(),
+                future: APIs.getAllFriendsForThisUserFunc(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data!.isNotEmpty) {
@@ -36,8 +36,7 @@ class PeopleScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           return friendCardWidget(
-                              context: context,
-                              uid: snapshot.data![index]);
+                              context: context, uid: snapshot.data![index]);
                         },
                       );
                     } else {

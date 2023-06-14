@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:random/auth/signin.dart';
 import 'package:random/home_page.dart';
-import 'package:random/main.dart';
+
+import '../API/api.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,8 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white));
 
-      if (firebaseAuth.currentUser != null) {
-        print('\nUser: ${firebaseAuth.currentUser}');
+      if (APIs.firebaseAuth.currentUser != null) {
+        print('\nUser: ${APIs.firebaseAuth.currentUser}');
         //navigate to home screen
         Get.to(const HomePage());
       } else {

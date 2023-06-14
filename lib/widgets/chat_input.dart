@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:random/main.dart';
+import 'package:random/API/api.dart';
 
 Widget chatInputWidget() {
   final TextEditingController msgController = TextEditingController();
@@ -60,7 +60,7 @@ Widget chatInputWidget() {
         //send message button
         MaterialButton(
           onPressed: () {
-            apis.sendNewMessageFunc(message: msgController.text);
+            APIs.sendNewMessageFunc(message: msgController.text);
           },
           minWidth: 0,
           padding:

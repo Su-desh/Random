@@ -3,30 +3,33 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:random/main.dart';
 import 'package:random/models/chat_user.dart';
 
 import '../models/message.dart';
 
 class APIs {
-  //Firestore Users reference
-  var usersReference = firestoreDB.collection('users');
-  //Firestore Chats reference
-  var chatsReference = firestoreDB.collection('chats');
+  // for authentication
+  static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  // to return current user
-  static User get user => firebaseAuth.currentUser!;
+  // for accessing cloud firestore database
+  static FirebaseFirestore firestoreDB = FirebaseFirestore.instance;
 
   // for accessing firebase storage
   static FirebaseStorage storage = FirebaseStorage.instance;
 
-//current user name
-  String currentUsersName = 'Username';
+  //Firestore Users reference
+  static var usersReference = firestoreDB.collection('users');
+  //Firestore Chats reference
+  static var chatsReference = firestoreDB.collection('chats');
 
-//test
+  // to return current user
+  static User get user => firebaseAuth.currentUser!;
+
+//current user name
+  static String currentUsersName = 'Username';
 
   // for creating a new user
-  Future<void> createUser({
+  static Future<void> createUser({
     required String username,
     required String userpass,
   }) async {
@@ -52,7 +55,7 @@ class APIs {
   }
 
 //get all the friend of current user
-  Future<List> getAllFriendsForThisUserFunc() async {
+  static Future<List> getAllFriendsForThisUserFunc() async {
     List friendsUidList = [];
 
     await usersReference.doc(user.uid).get().then((result) {
@@ -65,7 +68,7 @@ class APIs {
   }
 
 //fetch the friend name using his/her id
-  Future<String> getTheFriendUserNameUsingId(String id) async {
+  static Future<String> getTheFriendUserNameUsingId(String id) async {
     String friendname = 'name';
 
     await usersReference.doc(id).get().then((res) {
@@ -76,7 +79,7 @@ class APIs {
   }
 
   //get the current user name
-  getTheCurrentUsername() async {
+  static Future<void> getTheCurrentUsername() async {
     await usersReference.doc(user.uid).get().then((result) {
       currentUsersName = result.data()!['username'];
 
@@ -85,7 +88,7 @@ class APIs {
   }
 
 //create a conversation
-  createNewConversationFunc(
+  static Future<void> createNewConversationFunc(
       {required String fromUID,
       required String recieverUID,
       required String fromName,
@@ -108,7 +111,7 @@ class APIs {
   }
 
 //send a new message
-  sendNewMessageFunc({required String message}) async {
+  static Future<void> sendNewMessageFunc({required String message}) async {
     final newMessageData = {
       "message": message,
       "send_time": Timestamp.now(),

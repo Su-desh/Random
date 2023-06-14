@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/API/api.dart';
 import 'package:random/chat/chatting_screen.dart';
-import 'package:random/main.dart';
 import 'package:random/models/chat_user.dart';
 import 'package:random/widgets/more_vert.dart';
 
@@ -13,7 +13,7 @@ Widget friendCardWidget({required context, required String uid}) {
         // elevation: 10,
         color: Colors.blue,
         child: FutureBuilder(
-          future: apis.getTheFriendUserNameUsingId(uid),
+          future: APIs.getTheFriendUserNameUsingId(uid),
           builder: (_, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
@@ -25,7 +25,7 @@ Widget friendCardWidget({required context, required String uid}) {
               return GestureDetector(
                 onTap: () async {
                   ChatUser chatWith;
-                  await apis.usersReference.doc(uid).get().then((res) {
+                  await APIs.usersReference.doc(uid).get().then((res) {
                     chatWith = ChatUser.fromJson(res.data()!);
                     Get.to(ChattingScreenPage(user: chatWith));
                   });

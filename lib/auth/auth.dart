@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:random/main.dart';
+import 'package:random/API/api.dart';
 
 class AuthService {
   //sign out user
-  Future<void> signOutThisUser() async {
-    await firebaseAuth.signOut();
+  static Future<void> signOutThisUser() async {
+    await APIs.firebaseAuth.signOut();
   }
 
   //register new user
-  Future<String?> registration({
+  static Future<String?> registration({
     required String email,
     required String password,
   }) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
+      await APIs.firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -32,12 +32,12 @@ class AuthService {
   }
 
 //login
-  Future<String?> login({
+  static Future<String?> login({
     required String email,
     required String password,
   }) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
+      await APIs.firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

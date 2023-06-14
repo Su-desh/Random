@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:random/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:store_redirect/store_redirect.dart';
+
+import '../API/api.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
@@ -28,7 +29,7 @@ class SideDrawer extends StatelessWidget {
                   width: Get.width * 1,
                   height: Get.height * 0.10,
                   child: Center(
-                      child: Text(apis.currentUsersName,
+                      child: Text(APIs.currentUsersName,
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,

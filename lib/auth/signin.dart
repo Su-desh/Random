@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/API/api.dart';
+import 'package:random/auth/auth.dart';
 import 'package:random/auth/login.dart';
 import 'package:random/home_page.dart';
-import 'package:random/main.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -143,18 +144,18 @@ class _SignInScreenState extends State<SignInScreen> {
                               });
                               String emailfromUsername =
                                   '${_usernameController.text}@gmail.com';
-                              final message = await authService.registration(
+                              final message = await AuthService.registration(
                                 email: emailfromUsername,
                                 password: _passwordController.text,
                               );
                               if (message!.contains('Success')) {
                                 //call function
-                                await apis.createUser(
+                                await APIs.createUser(
                                   username: _usernameController.text,
                                   userpass: _passwordController.text,
                                 );
                                 //set the username in Drawer when new user acc is created
-                                await apis.getTheCurrentUsername();
+                                await APIs.getTheCurrentUsername();
                                 //after success register goto homepage
                                 Get.to(const HomePage());
                               } else {

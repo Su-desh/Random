@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/auth/auth.dart';
 import 'package:random/home_page.dart';
-import 'package:random/main.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -137,7 +137,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         String emailfromUsername =
                             '${_usernameController.text}@gmail.com';
 
-                        final message = await authService.login(
+                        final message = await AuthService.login(
                           email: emailfromUsername,
                           password: _passwordController.text,
                         );
