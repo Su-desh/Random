@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:random/screens/conversation_screen.dart';
-import 'package:random/screens/home_screen.dart';
-import 'package:random/screens/friends_screen.dart';
+import 'package:random/chat/conversations/conversation_screen.dart';
+import 'package:random/home_screen.dart';
+import 'package:random/chat/friends/friends_screen.dart';
 import 'package:random/general/side_drawer.dart';
 
 class HomePage extends StatefulWidget {

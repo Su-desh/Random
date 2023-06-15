@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:random/widgets/conversation_card.dart';
+import 'package:random/chat/conversations/conversation_card.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});

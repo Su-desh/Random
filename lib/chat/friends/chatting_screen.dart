@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random/API/api.dart';
 
-import '../helper/message_card.dart';
-import '../helper/my_date_util.dart';
-import '../models/chat_user.dart';
-import '../models/message.dart';
+import '../../helper/message_card.dart';
+import '../../helper/my_date_util.dart';
+import '../../models/chat_user.dart';
+import '../../models/message.dart';
 
 class ChattingScreenPage extends StatefulWidget {
   final ChatUser user;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:random/API/api.dart';
-import 'package:random/widgets/friend_card.dart';
+import 'package:random/chat/friends/friend_card.dart';
 
 class PeopleScreen extends StatelessWidget {
   const PeopleScreen({super.key});

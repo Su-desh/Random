@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:random/chat/new_chat.dart';
+import 'package:random/API/api.dart';
+import 'package:random/chat/new/new_chat.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             Get.to(
-              const NewChatScreen(),
+              ChatWithNewPerson(user: APIs.me),
             );
           },
           child: const Text('Random'),

@@ -1,9 +1,11 @@
+// bottom chat input field
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:random/API/api.dart';
 
-Widget chatInputWidget() {
-  final TextEditingController msgController = TextEditingController();
+Widget chatInputWidgetFunc() {
+  //for handling message text changes
+  final _textController = TextEditingController();
 
   return Padding(
     padding: EdgeInsets.symmetric(
@@ -20,37 +22,42 @@ Widget chatInputWidget() {
                 //emoji button
                 IconButton(
                     onPressed: () {
-                      // FocusScope.of(context).unfocus();
-                      // setState(() => _showEmoji = !_showEmoji);
+                      Get.snackbar('emoji !!',
+                          'add them to your firend list to send emoji');
                     },
                     icon: const Icon(Icons.emoji_emotions,
                         color: Colors.blueAccent, size: 25)),
 
                 Expanded(
                     child: TextField(
-                  controller: msgController,
+                  controller: _textController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  onTap: () {
-                    // if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
-                  },
+                  onTap: () {},
                   decoration: const InputDecoration(
                       hintText: 'Type Something...',
                       hintStyle: TextStyle(color: Colors.blueAccent),
                       border: InputBorder.none),
                 )),
 
-                //pick image from gallery button
                 IconButton(
-                    onPressed: () async {
-                      final ImagePicker picker = ImagePicker();
-                      picker.pickImage(source: ImageSource.gallery);
+                    onPressed: () {
+                      Get.snackbar('message !!',
+                          'you have to be friend with the user to send them photo');
                     },
                     icon: const Icon(Icons.image,
                         color: Colors.blueAccent, size: 26)),
 
+                IconButton(
+                    onPressed: () {
+                      Get.snackbar('message',
+                          'you have to be friend with the user to send them photo');
+                    },
+                    icon: const Icon(Icons.camera_alt_rounded,
+                        color: Colors.blueAccent, size: 26)),
+
                 //adding some space
-                SizedBox(width: Get.width * .02),
+                SizedBox(width: Get.width * 0.02),
               ],
             ),
           ),
@@ -59,14 +66,17 @@ Widget chatInputWidget() {
         //send message button
         MaterialButton(
           onPressed: () {
-            //   APIs.sendNewMessageFunc(message: msgController.text);
+            if (_textController.text.isNotEmpty) {
+              // APIs.sendMessage(widget.user, _textController.text, Type.text);
+              _textController.text = '';
+            }
           },
           minWidth: 0,
           padding:
               const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
           shape: const CircleBorder(),
           color: Colors.green,
-          child: const Icon(Icons.send, color: Colors.white, size: 28),
+          child: const Icon(Icons.send, color: Colors.white, size: 30),
         )
       ],
     ),

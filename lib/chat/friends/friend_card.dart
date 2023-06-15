@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/API/api.dart';
-import 'package:random/chat/chatting_screen.dart';
+import 'package:random/chat/friends/chatting_screen.dart';
 import 'package:random/models/chat_user.dart';
-import 'package:random/widgets/more_vert.dart';
+import 'package:random/general/more_vert.dart';
 
 Widget friendCardWidget({required context, required String chatUserUId}) {
   return Container(
