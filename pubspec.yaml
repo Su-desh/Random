@@ -23,6 +23,7 @@ dependencies:
   firebase_storage: ^11.2.2
   emoji_picker_flutter: ^1.6.1
   cached_network_image: ^3.2.3
+  flutter_windowmanager: ^0.2.0
   
   
 

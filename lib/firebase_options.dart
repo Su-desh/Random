@@ -52,8 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '17134732223',
     projectId: 'random-49876',
     authDomain: 'random-49876.firebaseapp.com',
-    databaseURL:
-        'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL: 'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'random-49876.appspot.com',
     measurementId: 'G-5DHXJBX7D1',
   );
@@ -63,8 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:17134732223:android:9d888920f6b55a6ad5170a',
     messagingSenderId: '17134732223',
     projectId: 'random-49876',
-    databaseURL:
-        'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL: 'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'random-49876.appspot.com',
   );
 
@@ -73,8 +71,7 @@ class DefaultFirebaseOptions {
     appId: '1:17134732223:ios:a27ec3b9bee73476d5170a',
     messagingSenderId: '17134732223',
     projectId: 'random-49876',
-    databaseURL:
-        'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL: 'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'random-49876.appspot.com',
     iosBundleId: 'com.example.random',
   );
