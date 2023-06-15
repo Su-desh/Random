@@ -138,7 +138,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               //the button is pressed
-
                               setState(() {
                                 isPressedSignin = true;
                               });

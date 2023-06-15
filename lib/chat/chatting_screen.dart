@@ -134,7 +134,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
   // app bar widget
   Widget _appBar() {
     return StreamBuilder(
-        stream: APIs.getUserInfo(widget.user),
+        stream: APIs.getUserInfo(widget.user.user_UID),
         builder: (context, snapshot) {
           final data = snapshot.data?.docs;
           final list =

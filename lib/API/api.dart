@@ -34,7 +34,6 @@ class APIs {
     required String userpass,
   }) async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
-
     final chatUser = ChatUser(
       blocked_list: [],
       friends_list: [],
@@ -47,7 +46,6 @@ class APIs {
       username: username,
       userpass: userpass,
     );
-
     return await firestoreDB
         .collection('users')
         .doc(user.uid)
@@ -65,17 +63,6 @@ class APIs {
     }, onError: (e) => print("Error completing: $e"));
 
     return friendsUidList;
-  }
-
-//fetch the friend name using his/her id
-  static Future<String> getTheFriendUserNameUsingId(String id) async {
-    String friendname = 'name';
-
-    await usersReference.doc(id).get().then((res) {
-      friendname = res.data()!['username'];
-    }, onError: (e) => print('Error completing $e'));
-
-    return friendname;
   }
 
   //get the current user name
@@ -110,32 +97,23 @@ class APIs {
     }
   }
 
-//send a new message
-  static Future<void> sendNewMessageFunc({required String message}) async {
-    final newMessageData = {
-      "message": message,
-      "send_time": Timestamp.now(),
-      "sender_uid": firebaseAuth.currentUser!.uid,
-      "type": 'text',
-    };
-
-    try {
-      await chatsReference
-          .doc('aMJaSvaTg44z29vLMfbR')
-          .collection('msglist')
-          .add(newMessageData);
-      // ignore: avoid_print
-      print('new message data added $newMessageData');
-    } catch (e) {
-      // ignore: avoid_print
-      print('this is the catch error $e');
+//! very important func , used to genereate DOCUMENT id for chat
+  static String getConversationID(String id) {
+    String currentUserId = user.uid;
+    String chatWithUserId = id;
+    //both user UID will be compared and smaller id will be first
+    //with a _ and second id
+    //eg smallerUID_greaterUID
+    int result = currentUserId.compareTo(chatWithUserId);
+    //both UID will never be equal, so no need of third conditon
+    if (result < 0) {
+      print('"$currentUserId" is less than "$chatWithUserId".');
+      return '${currentUserId}_$chatWithUserId';
+    } else {
+      print('"$currentUserId" is greater than "$chatWithUserId".');
+      return '${chatWithUserId}_$currentUserId';
     }
   }
-
-  // useful for getting conversation id
-  static String getConversationID(String id) => user.uid.hashCode <= id.hashCode
-      ? '${user.uid}_$id'
-      : '${id}_${user.uid}';
 
   // for getting all messages of a specific conversation from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages(
@@ -148,10 +126,10 @@ class APIs {
 
   // for getting specific user info
   static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(
-      ChatUser chatUser) {
+      String userUid) {
     return firestoreDB
         .collection('users')
-        .where('id', isEqualTo: chatUser.user_UID)
+        .where('user_UID', isEqualTo: userUid)
         .snapshots();
   }
 
@@ -160,7 +138,6 @@ class APIs {
       ChatUser chatUser, String msg, Type type) async {
     //message sending time (also used as id)
     final time = DateTime.now().millisecondsSinceEpoch.toString();
-
     //message to send
     final Message message = Message(
         toId: chatUser.user_UID,
@@ -173,7 +150,6 @@ class APIs {
     final ref = firestoreDB
         .collection('chats/${getConversationID(chatUser.user_UID)}/messages/');
     await ref.doc(time).set(message.toJson());
-    // sendPushNotification(chatUser, type == Type.text ? msg : 'image')
   }
 
   //update read status of message
@@ -184,42 +160,19 @@ class APIs {
         .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
   }
 
-  //delete message
-  static Future<void> deleteMessage(Message message) async {
-    await firestoreDB
-        .collection('chats/${getConversationID(message.toId)}/messages/')
-        .doc(message.sent)
-        .delete();
-
-    if (message.type == Type.image) {
-      await storage.refFromURL(message.msg).delete();
-    }
-  }
-
-  //update message
-  static Future<void> updateMessage(Message message, String updatedMsg) async {
-    await firestoreDB
-        .collection('chats/${getConversationID(message.toId)}/messages/')
-        .doc(message.sent)
-        .update({'msg': updatedMsg});
-  }
-
   //send chat image
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
     //getting image file extension
     final ext = file.path.split('.').last;
-
     //storage file ref with path
     final ref = storage.ref().child(
         'images/${getConversationID(chatUser.user_UID)}/${DateTime.now().millisecondsSinceEpoch}.$ext');
-
     //uploading image
     await ref
         .putFile(file, SettableMetadata(contentType: 'image/$ext'))
         .then((p0) {
       print('Data Transferred: ${p0.bytesTransferred / 1000} kb');
     });
-
     //updating image in firestore database
     final imageUrl = await ref.getDownloadURL();
     await sendMessage(chatUser, imageUrl, Type.image);

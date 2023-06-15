@@ -36,7 +36,8 @@ class PeopleScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           return friendCardWidget(
-                              context: context, uid: snapshot.data![index]);
+                              context: context,
+                              chatUserUId: snapshot.data![index]);
                         },
                       );
                     } else {

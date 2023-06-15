@@ -5,15 +5,15 @@ import 'package:random/chat/chatting_screen.dart';
 import 'package:random/models/chat_user.dart';
 import 'package:random/widgets/more_vert.dart';
 
-Widget friendCardWidget({required context, required String uid}) {
+Widget friendCardWidget({required context, required String chatUserUId}) {
   return Container(
     padding: const EdgeInsets.all(10.0),
     height: 120,
     child: Card(
         // elevation: 10,
         color: Colors.blue,
-        child: FutureBuilder(
-          future: APIs.getTheFriendUserNameUsingId(uid),
+        child: StreamBuilder(
+          stream: APIs.getUserInfo(chatUserUId),
           builder: (_, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
@@ -22,13 +22,12 @@ Widget friendCardWidget({required context, required String uid}) {
                 style: TextStyle(fontSize: 20),
               ));
             } else {
+              final thisDocData = snapshot.data?.docs.first;
+              ChatUser chatWithUser = ChatUser.fromJson(thisDocData!.data());
+
               return GestureDetector(
                 onTap: () async {
-                  ChatUser chatWith;
-                  await APIs.usersReference.doc(uid).get().then((res) {
-                    chatWith = ChatUser.fromJson(res.data()!);
-                    Get.to(ChattingScreenPage(user: chatWith));
-                  });
+                  Get.to(ChattingScreenPage(user: chatWithUser));
                 },
                 child: Row(children: <Widget>[
                   Expanded(
@@ -40,7 +39,7 @@ Widget friendCardWidget({required context, required String uid}) {
                           backgroundColor: Colors.green,
                           maxRadius: 20,
                           child: Text(
-                            snapshot.data![0],
+                            chatWithUser.username[0],
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -51,7 +50,7 @@ Widget friendCardWidget({required context, required String uid}) {
                       ),
                       Flexible(
                         child: Text(
-                          snapshot.data!,
+                          chatWithUser.username,
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

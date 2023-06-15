@@ -15,6 +15,8 @@ class _LogInScreenState extends State<LogInScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool isPressedlogin = false;
+
   // show or hide password
   final textFieldFocusNode = FocusNode();
   bool _obscured = true;
@@ -128,29 +130,44 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        String emailfromUsername =
-                            '${_usernameController.text}@gmail.com';
+                  !isPressedlogin
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              //the button is pressed
+                              setState(() {
+                                isPressedlogin = true;
+                              });
+                              String emailfromUsername =
+                                  '${_usernameController.text}@gmail.com';
 
-                        final message = await AuthService.login(
-                          email: emailfromUsername,
-                          password: _passwordController.text,
-                        );
-                        if (message!.contains('Success')) {
-                          Get.to(const HomePage());
-                        } else {
-                          Get.snackbar('error !!', message,
-                              backgroundColor: Colors.blue);
-                        }
-                      }
-                    },
-                    child: const Text('Log In'),
-                  ),
+                              final message = await AuthService.login(
+                                email: emailfromUsername,
+                                password: _passwordController.text,
+                              );
+                              if (message!.contains('Success')) {
+                                Get.to(const HomePage());
+                              } else {
+                                //error occured
+                                setState(() {
+                                  isPressedlogin = false;
+                                });
+                                Get.snackbar('error !!', message,
+                                    backgroundColor: Colors.blue);
+                              }
+                            }
+                          },
+                          child: const Text('Log In'),
+                        )
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () {},
+                          child: const Text("Please wait..")),
                 ],
               ),
             ),

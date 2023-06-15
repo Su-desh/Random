@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:random/API/api.dart';
 
 Widget chatInputWidget() {
   final TextEditingController msgController = TextEditingController();
 
   return Padding(
     padding: EdgeInsets.symmetric(
-        vertical: Get.height * .01, horizontal: Get.width * .025),
+        vertical: Get.height * 0.01, horizontal: Get.width * 0.025),
     child: Row(
       children: [
         //input field & buttons
@@ -60,7 +59,7 @@ Widget chatInputWidget() {
         //send message button
         MaterialButton(
           onPressed: () {
-            APIs.sendNewMessageFunc(message: msgController.text);
+            //   APIs.sendNewMessageFunc(message: msgController.text);
           },
           minWidth: 0,
           padding:
