@@ -153,7 +153,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                   username: _usernameController.text,
                                   userpass: _passwordController.text,
                                 );
-
+                                //after creating new user update online status
+                                await APIs.updateActiveStatus(true);
                                 //after success register goto homepage
                                 Get.to(const HomePage());
                               } else {

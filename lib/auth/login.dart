@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/API/api.dart';
 import 'package:random/auth/auth.dart';
 import 'package:random/home_page.dart';
 
@@ -149,6 +150,8 @@ class _LogInScreenState extends State<LogInScreen> {
                                 password: _passwordController.text,
                               );
                               if (message!.contains('Success')) {
+                                // update status
+                                await APIs.updateActiveStatus(true);
                                 Get.to(const HomePage());
                               } else {
                                 //error occured
