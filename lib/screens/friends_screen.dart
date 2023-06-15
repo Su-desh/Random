@@ -7,55 +7,34 @@ class PeopleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("your Friends",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-            ),
-            FutureBuilder(
-                future: APIs.getAllFriendsForThisUserFunc(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data!.isNotEmpty) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return friendCardWidget(
-                              context: context,
-                              chatUserUId: snapshot.data![index]);
-                        },
-                      );
-                    } else {
-                      return const Center(
-                          child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text("Friends list is empty"),
-                      ));
-                    }
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                })
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, bottom: 15, top: 15),
+            child: Text("your Friends",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+          ),
         ),
-      ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: APIs.me.friends_list.length,
+          itemBuilder: (context, index) {
+            if (APIs.me.friends_list.isNotEmpty) {
+              return friendCardWidget(
+                  context: context, chatUserUId: APIs.me.friends_list[index]);
+            } else {
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text("Friends list is empty"),
+                ),
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

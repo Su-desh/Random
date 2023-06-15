@@ -17,10 +17,13 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-            onPressed: () {
-              Get.to(const NewChatScreen());
-            },
-            child: const Text('Random'))
+          onPressed: () {
+            Get.to(
+              const NewChatScreen(),
+            );
+          },
+          child: const Text('Random'),
+        )
       ],
     );
   }

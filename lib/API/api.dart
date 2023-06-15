@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,14 +20,41 @@ class APIs {
 
   //Firestore Users reference
   static var usersReference = firestoreDB.collection('users');
+
   //Firestore Chats reference
   static var chatsReference = firestoreDB.collection('chats');
 
   // to return current user
   static User get user => firebaseAuth.currentUser!;
 
-//current user name
-  static String currentUsersName = 'Username';
+  // for storing self information
+  static ChatUser me = ChatUser(
+    blocked_list: [],
+    friends_list: [],
+    is_online: false,
+    is_searching_new: false,
+    created_at: '',
+    last_seen: '',
+    user_UID: '',
+    useremail: '',
+    username: '',
+    userpass: '',
+  );
+
+  // for getting current user info
+  static Future<void> getSelfInfo() async {
+    await firestoreDB
+        .collection('users')
+        .doc(user.uid)
+        .get()
+        .then((user) async {
+      me = ChatUser.fromJson(user.data()!);
+
+      //for setting user status to active
+      APIs.updateActiveStatus(true);
+      log('My Data: ${user.data()}');
+    });
+  }
 
   // for creating a new user
   static Future<void> createUser({
@@ -50,51 +78,6 @@ class APIs {
         .collection('users')
         .doc(user.uid)
         .set(chatUser.toJson());
-  }
-
-//get all the friend of current user
-  static Future<List> getAllFriendsForThisUserFunc() async {
-    List friendsUidList = [];
-
-    await usersReference.doc(user.uid).get().then((result) {
-      friendsUidList = result.data()!['friends_list'];
-
-      print("Friend list Success $friendsUidList");
-    }, onError: (e) => print("Error completing: $e"));
-
-    return friendsUidList;
-  }
-
-  //get the current user name
-  static Future<void> getTheCurrentUsername() async {
-    await usersReference.doc(user.uid).get().then((result) {
-      currentUsersName = result.data()!['username'];
-
-      print("user name Success $currentUsersName");
-    }, onError: (e) => print("Error completing: $e"));
-  }
-
-//create a conversation
-  static Future<void> createNewConversationFunc(
-      {required String fromUID,
-      required String recieverUID,
-      required String fromName,
-      required String recieverName}) async {
-    final newConversationDocData = {
-      "from_UID": fromUID,
-      "from_name": fromName,
-      "reciever_UID": recieverUID,
-      "reciever_name": recieverName,
-    };
-    print('im in the create new conv func');
-    try {
-      await chatsReference.add(newConversationDocData);
-      // ignore: avoid_print
-      print('new user data added $newConversationDocData');
-    } catch (e) {
-      // ignore: avoid_print
-      print('this is the catch error $e');
-    }
   }
 
 //! very important func , used to genereate DOCUMENT id for chat
@@ -186,5 +169,13 @@ class APIs {
         .orderBy('sent', descending: true)
         .limit(1)
         .snapshots();
+  }
+
+  // update online or last active status of user
+  static Future<void> updateActiveStatus(bool isOnline) async {
+    firestoreDB.collection('users').doc(user.uid).update({
+      'is_online': isOnline,
+      'last_seen': DateTime.now().millisecondsSinceEpoch.toString(),
+    });
   }
 }

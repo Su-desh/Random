@@ -153,8 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   username: _usernameController.text,
                                   userpass: _passwordController.text,
                                 );
-                                //set the username in Drawer when new user acc is created
-                                await APIs.getTheCurrentUsername();
+
                                 //after success register goto homepage
                                 Get.to(const HomePage());
                               } else {

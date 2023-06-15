@@ -14,11 +14,11 @@ class ChatScreen extends StatelessWidget {
           children: <Widget>[
             const SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
+                padding: EdgeInsets.only(left: 20, bottom: 15, top: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text("your conversations",
+                    Text("your Conversations",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold)),
                   ],

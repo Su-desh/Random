@@ -24,12 +24,6 @@ class Random extends StatefulWidget {
 
 class _RandomState extends State<Random> {
   @override
-  void initState() {
-    APIs.getTheCurrentUsername();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
@@ -39,9 +33,13 @@ class _RandomState extends State<Random> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               //return const HomePage();
+              //calling this api to get the logged in user info
+              APIs.getSelfInfo();
               return const SplashScreen();
             } else {
               //return const SignInScreen();
+              //calling this api to get the logged in user info
+              APIs.getSelfInfo();
               return const SplashScreen();
             }
           }),

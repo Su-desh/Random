@@ -9,26 +9,26 @@ Widget friendCardWidget({required context, required String chatUserUId}) {
   return Container(
     padding: const EdgeInsets.all(10.0),
     height: 120,
-    child: Card(
-        // elevation: 10,
-        color: Colors.blue,
-        child: StreamBuilder(
-          stream: APIs.getUserInfo(chatUserUId),
-          builder: (_, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                  child: Text(
-                'username',
-                style: TextStyle(fontSize: 20),
-              ));
-            } else {
-              final thisDocData = snapshot.data?.docs.first;
-              ChatUser chatWithUser = ChatUser.fromJson(thisDocData!.data());
+    child: StreamBuilder(
+      stream: APIs.getUserInfo(chatUserUId),
+      builder: (_, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+              child: Text(
+            'username',
+            style: TextStyle(fontSize: 20),
+          ));
+        } else {
+          final thisDocData = snapshot.data?.docs.first;
+          ChatUser chatWithUser = ChatUser.fromJson(thisDocData!.data());
 
-              return GestureDetector(
-                onTap: () async {
-                  Get.to(ChattingScreenPage(user: chatWithUser));
-                },
+          return GestureDetector(
+            onTap: () {
+              Get.to(ChattingScreenPage(user: chatWithUser));
+            },
+            child: Card(
+                // elevation: 10,
+                color: Colors.blue,
                 child: Row(children: <Widget>[
                   Expanded(
                       child: Row(
@@ -77,10 +77,10 @@ Widget friendCardWidget({required context, required String chatUserUId}) {
                       child: Icon(Icons.more_vert),
                     ),
                   )
-                ]),
-              );
-            }
-          },
-        )),
+                ])),
+          );
+        }
+      },
+    ),
   );
 }
