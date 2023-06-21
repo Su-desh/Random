@@ -1,11 +1,13 @@
 // bottom chat input field
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:random/API/api.dart';
+import 'package:random/chat/new/new_user_state.dart';
+import 'package:random/main.dart';
+
 
 Widget chatInputWidgetFunc() {
   //for handling message text changes
-  final _textController = TextEditingController();
+  final textController = TextEditingController();
 
   return Padding(
     padding: EdgeInsets.symmetric(
@@ -30,7 +32,7 @@ Widget chatInputWidgetFunc() {
 
                 Expanded(
                     child: TextField(
-                  controller: _textController,
+                  controller: textController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   onTap: () {},
@@ -43,7 +45,7 @@ Widget chatInputWidgetFunc() {
                 IconButton(
                     onPressed: () {
                       Get.snackbar('message !!',
-                          'you have to be friend with the user to send them photo');
+                          'you have to be friend with the user to share photo');
                     },
                     icon: const Icon(Icons.image,
                         color: Colors.blueAccent, size: 26)),
@@ -51,7 +53,7 @@ Widget chatInputWidgetFunc() {
                 IconButton(
                     onPressed: () {
                       Get.snackbar('message',
-                          'you have to be friend with the user to send them photo');
+                          'you have to be friend with the user to share photo');
                     },
                     icon: const Icon(Icons.camera_alt_rounded,
                         color: Colors.blueAccent, size: 26)),
@@ -64,20 +66,24 @@ Widget chatInputWidgetFunc() {
         ),
 
         //send message button
-        MaterialButton(
-          onPressed: () {
-            if (_textController.text.isNotEmpty) {
-              // APIs.sendMessage(widget.user, _textController.text, Type.text);
-              _textController.text = '';
-            }
-          },
-          minWidth: 0,
-          padding:
-              const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
-          shape: const CircleBorder(),
-          color: Colors.green,
-          child: const Icon(Icons.send, color: Colors.white, size: 30),
-        )
+        GetBuilder<NewConnect>(
+            init: newConnect,
+            // You can initialize your controller here the first time. Don't use init in your other GetBuilders of same controller
+            builder: (val) => MaterialButton(
+                  onPressed: () {
+                    if (val.isConnected && textController.text.isNotEmpty) {
+                      val.sendMessageOfNewConnect(
+                          val.connectedWithChatUser, textController.text);
+                      textController.text = '';
+                    }
+                  },
+                  minWidth: 0,
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 10, right: 5, left: 10),
+                  shape: const CircleBorder(),
+                  color:val.isConnected ? Colors.green: Colors.red,
+                  child: const Icon(Icons.send, color: Colors.white, size: 30),
+                ))
       ],
     ),
   );
