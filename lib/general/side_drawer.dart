@@ -6,7 +6,9 @@ import 'package:store_redirect/store_redirect.dart';
 
 import '../API/api.dart';
 
+/// Widget to build the drawer
 class SideDrawer extends StatelessWidget {
+  // ignore: public_member_api_docs
   const SideDrawer({super.key});
 
   @override

@@ -24,7 +24,10 @@ linter:
   rules:
      avoid_print: false  
      non_constant_identifier_names: false
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
-
+     always_declare_return_types: true
+     avoid_void_async: true
+     public_member_api_docs: true
+     prefer_single_quotes: false 
+     
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

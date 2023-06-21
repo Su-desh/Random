@@ -9,7 +9,9 @@ import '../../helper/message_card.dart';
 import '../../helper/my_date_util.dart';
 import '../../models/message.dart';
 
+/// widget to show the chatting page with the new connected user
 class ChatWithNewPerson extends StatefulWidget {
+  // ignore: public_member_api_docs
   const ChatWithNewPerson({super.key});
 
   @override
@@ -33,7 +35,6 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
                 backgroundColor: const Color.fromARGB(45, 135, 130, 129),
                 automaticallyImplyLeading: false,
                 flexibleSpace: Row(
-                  
                   children: [
                     //back button
                     Padding(

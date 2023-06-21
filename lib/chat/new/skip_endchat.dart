@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:random/chat/new/new_user_state.dart';
 import 'package:random/main.dart';
 
+/// blue line widget which will have options to skip end and add friend
 Widget skipToNextEndChatWidget() {
   return GetBuilder<NewConnect>(
     init: newConnect,
@@ -14,16 +15,16 @@ Widget skipToNextEndChatWidget() {
           Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: TextButton(
-                onPressed: () async{
-               await   value.searchNewConnectFunc();
+                onPressed: () async {
+                  await value.searchNewConnectFunc();
                 },
                 child: const Text('Skip To Next')),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: TextButton(
-                onPressed: () async{
-                await  value.endThisConnectedChat();
+                onPressed: () async {
+                  await value.endThisConnectedChat();
                 },
                 child: const Text('End This Chat')),
           ),

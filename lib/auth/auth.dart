@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:random/API/api.dart';
 
+///Class to deal with Auth related Services
 class AuthService {
-  //sign out user
+  /// sign out user
   static Future<void> signOutThisUser() async {
     await APIs.firebaseAuth.signOut();
   }
 
-  //register new user
+  /// register new user
   static Future<String?> registration({
     required String email,
     required String password,
@@ -31,7 +32,7 @@ class AuthService {
     }
   }
 
-//login
+  /// login
   static Future<String?> login({
     required String email,
     required String password,

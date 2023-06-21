@@ -6,10 +6,12 @@ import '../API/api.dart';
 import '../helper/my_date_util.dart';
 import '../models/message.dart';
 
-// for showing single message details
+/// for showing single message details
 class MessageCard extends StatefulWidget {
+  // ignore: public_member_api_docs
   const MessageCard({super.key, required this.message});
 
+  // ignore: public_member_api_docs
   final Message message;
 
   @override

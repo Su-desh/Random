@@ -1,4 +1,6 @@
+/// User model for the required user
 class ChatUser {
+  // ignore: public_member_api_docs
   ChatUser(
       {required this.blocked_list,
       required this.friends_list,
@@ -11,17 +13,37 @@ class ChatUser {
       required this.username,
       required this.userpass});
 
+  /// blocked user list
   late List blocked_list;
+
+  /// friends list
   late List friends_list;
+
+  /// whether the user is online
   late bool is_online;
+
+  /// whether the user is searching for new user to chat with
   late bool is_searching_new;
+
+  /// when this user account was created
   late String created_at;
+
+  /// last seen of this user
   late String last_seen;
+
+  /// unique Id to identify him/her
   late String user_UID;
+
+  /// email of the user
   late String useremail;
+
+  /// name of the user
   late String username;
+
+  /// password of the user
   late String userpass;
 
+  /// convert the json data to ChatUser Model data
   ChatUser.fromJson(Map<String, dynamic> json) {
     blocked_list = json['blocked_list'] ?? [];
     friends_list = json['friends_list'] ?? [];
@@ -35,6 +57,7 @@ class ChatUser {
     userpass = json['userpass'] ?? '';
   }
 
+  /// convert ChatUser model to Json
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['blocked_list'] = blocked_list;

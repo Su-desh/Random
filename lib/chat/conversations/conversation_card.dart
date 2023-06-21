@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// card widget function for conversation of the users
 Widget conversationCardWidget(
     {required String name,
     required String messageText,

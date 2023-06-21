@@ -19,9 +19,12 @@ void main() async {
       .then((value) => runApp(const Random()));
 }
 
+/// instance of newConnect class
 final newConnect = NewConnect();
 
+///First widget to be called from runApp();
 class Random extends StatefulWidget {
+  // ignore: public_member_api_docs
   const Random({super.key});
 
   @override

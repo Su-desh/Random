@@ -6,10 +6,12 @@ import 'package:random/models/new_connect.dart';
 
 import '../../models/message.dart';
 
+/// New Connect state manager
 class NewConnect extends GetxController {
+  /// whether this user is connected with new user to chat
   bool isConnected = false;
 
-  // for storing Connected user information
+  /// for storing Connected user information
   NewConnectedChatUser connectedWithChatUser = NewConnectedChatUser(
     is_online: true,
     is_searching_new: false,
@@ -18,6 +20,7 @@ class NewConnect extends GetxController {
     username: '',
   );
 
+  /// This function is used for searching the new user to chat with
   Future<void> searchNewConnectFunc() async {
     //set this user searching true
     // APIs.firestoreDB
@@ -53,6 +56,7 @@ class NewConnect extends GetxController {
     );
   }
 
+  /// This function will be triggered when the user want to end the chat completely
   Future<void> endThisConnectedChat() async {
     await APIs.firestoreDB
         .collection('temp')
@@ -66,7 +70,7 @@ class NewConnect extends GetxController {
     update();
   }
 
-  // for getting specific user info
+  /// for getting specific user info
   static Stream<QuerySnapshot<Map<String, dynamic>>> getNewConnectedUserInfo(
       String userUid) {
     return APIs.firestoreDB
@@ -75,7 +79,7 @@ class NewConnect extends GetxController {
         .snapshots();
   }
 
-  //for sending new message in chat
+  /// for sending new message in chat
   Future<void> sendMessageOfNewConnect(
       NewConnectedChatUser chatUser, String msg) async {
     //message sending time (also used as id)
@@ -94,7 +98,7 @@ class NewConnect extends GetxController {
     await ref.doc(time).set(message.toJson());
   }
 
-  // for getting all messages of a specific conversation from firestore database
+  /// for getting all messages of a specific conversation from firestore database
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessagesOfNewConnect(
       NewConnectedChatUser user) {
     return APIs.firestoreDB
@@ -103,7 +107,7 @@ class NewConnect extends GetxController {
         .snapshots();
   }
 
-  //get only last message of a specific chat
+  /// get only last message of a specific chat
   static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessageOfNewConnect(
       ChatUser user) {
     return APIs.firestoreDB

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+///Widget which will be shown when the user click on 3 dots present on friend card
 Widget moreVertBottomSheetWidget() {
   return Container(
     decoration: const BoxDecoration(

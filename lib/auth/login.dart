@@ -4,7 +4,9 @@ import 'package:random/API/api.dart';
 import 'package:random/auth/auth.dart';
 import 'package:random/home_page.dart';
 
+/// Log in Screen page for the existing user
 class LogInScreen extends StatefulWidget {
+  // ignore: public_member_api_docs
   const LogInScreen({super.key});
 
   @override

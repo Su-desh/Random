@@ -12,9 +12,12 @@ import '../../helper/my_date_util.dart';
 import '../../models/chat_user.dart';
 import '../../models/message.dart';
 
+/// Chating Screen page for the users who are friend with each other
 class ChattingScreenPage extends StatefulWidget {
+  /// getting friend(user) model
   final ChatUser user;
 
+  // ignore: public_member_api_docs
   const ChattingScreenPage({super.key, required this.user});
 
   @override

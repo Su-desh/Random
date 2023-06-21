@@ -5,6 +5,7 @@ import 'package:random/chat/friends/chatting_screen.dart';
 import 'package:random/models/chat_user.dart';
 import 'package:random/general/more_vert.dart';
 
+/// card widget for the users who are friend
 Widget friendCardWidget({required context, required String chatUserUId}) {
   return Container(
     padding: const EdgeInsets.all(10.0),

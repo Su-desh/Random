@@ -8,26 +8,27 @@ import 'package:random/models/chat_user.dart';
 
 import '../models/message.dart';
 
+///An API class to work with all required API requests
 class APIs {
-  // for authentication
+  /// for authentication
   static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  // for accessing cloud firestore database
+  /// for accessing cloud firestore database
   static FirebaseFirestore firestoreDB = FirebaseFirestore.instance;
 
-  // for accessing firebase storage
+  /// for accessing firebase storage
   static FirebaseStorage storage = FirebaseStorage.instance;
 
-  //Firestore Users reference
+  /// Firestore Users reference
   static var usersReference = firestoreDB.collection('users');
 
-  //Firestore Chats reference
+  /// Firestore Chats reference
   static var chatsReference = firestoreDB.collection('chats');
 
-  // to return current user
+  /// to return current user
   static User get user => firebaseAuth.currentUser!;
 
-  // for storing self information
+  /// for storing self information
   static ChatUser me = ChatUser(
     blocked_list: [],
     friends_list: [],
@@ -41,7 +42,7 @@ class APIs {
     userpass: '',
   );
 
-  // for getting current user info
+  /// for getting current user info
   static Future<void> getSelfInfo() async {
     await firestoreDB
         .collection('users')
@@ -56,7 +57,7 @@ class APIs {
     });
   }
 
-  // for creating a new user
+  /// for creating a new user
   static Future<void> createUser({
     required String username,
     required String userpass,
@@ -80,7 +81,7 @@ class APIs {
         .set(chatUser.toJson());
   }
 
-//! very important func , used to genereate DOCUMENT id for chat
+  ///! very important func , used to genereate DOCUMENT id for chat
   static String getConversationID(String id) {
     String currentUserId = user.uid;
     String chatWithUserId = id;
@@ -98,7 +99,7 @@ class APIs {
     }
   }
 
-  // for getting all messages of a specific conversation from firestore database
+  /// for getting all messages of a specific conversation from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages(
       ChatUser user) {
     return firestoreDB
@@ -107,7 +108,7 @@ class APIs {
         .snapshots();
   }
 
-  // for getting specific user info
+  /// for getting specific user info
   static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(
       String userUid) {
     return firestoreDB
@@ -116,7 +117,7 @@ class APIs {
         .snapshots();
   }
 
-  // for sending message
+  ///  for sending message
   static Future<void> sendMessage(
       ChatUser chatUser, String msg, Type type) async {
     //message sending time (also used as id)
@@ -135,7 +136,7 @@ class APIs {
     await ref.doc(time).set(message.toJson());
   }
 
-  //update read status of message
+  /// update read status of message
   static Future<void> updateMessageReadStatus(Message message) async {
     firestoreDB
         .collection('chats/${getConversationID(message.fromId)}/messages/')
@@ -143,7 +144,7 @@ class APIs {
         .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
   }
 
-  //send chat image
+  /// send chat image
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
     //getting image file extension
     final ext = file.path.split('.').last;
@@ -161,7 +162,7 @@ class APIs {
     await sendMessage(chatUser, imageUrl, Type.image);
   }
 
-  //get only last message of a specific chat
+  /// get only last message of a specific chat
   static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(
       ChatUser user) {
     return firestoreDB
@@ -171,7 +172,7 @@ class APIs {
         .snapshots();
   }
 
-  // update online or last active status of user
+  /// update online or last active status of user
   static Future<void> updateActiveStatus(bool isOnline) async {
     firestoreDB.collection('users').doc(user.uid).update({
       'is_online': isOnline,

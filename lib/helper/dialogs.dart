@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+///basic dialogs Class
 class Dialogs {
+  /// function to show snackbar with certain msg
   static void showSnackbar(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(msg),
@@ -8,6 +10,7 @@ class Dialogs {
         behavior: SnackBarBehavior.floating));
   }
 
+  /// function to show progress indicator
   static void showProgressBar(BuildContext context) {
     showDialog(
         context: context,

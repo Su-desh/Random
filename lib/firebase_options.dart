@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  // ignore: public_member_api_docs
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
@@ -46,32 +47,38 @@ class DefaultFirebaseOptions {
     }
   }
 
+  // ignore: public_member_api_docs
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBqesrUKz6db1GB8P-XDPmdZxZstSfJE4I',
     appId: '1:17134732223:web:8d3729ff344bcd3dd5170a',
     messagingSenderId: '17134732223',
     projectId: 'random-49876',
     authDomain: 'random-49876.firebaseapp.com',
-    databaseURL: 'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'random-49876.appspot.com',
     measurementId: 'G-5DHXJBX7D1',
   );
 
+  // ignore: public_member_api_docs
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBcgrFQo5lUmJ-A-MdwS1H1nnN49sjTqBA',
     appId: '1:17134732223:android:9d888920f6b55a6ad5170a',
     messagingSenderId: '17134732223',
     projectId: 'random-49876',
-    databaseURL: 'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'random-49876.appspot.com',
   );
 
+  // ignore: public_member_api_docs
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDNZl7nKUcaH-THoo3HT54OilASFheCKPY',
     appId: '1:17134732223:ios:a27ec3b9bee73476d5170a',
     messagingSenderId: '17134732223',
     projectId: 'random-49876',
-    databaseURL: 'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'random-49876.appspot.com',
     iosBundleId: 'com.example.random',
   );

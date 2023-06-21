@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/chat/new/new_chat.dart';
 
+/// widget to show home Screen of the app
 class HomeScreen extends StatelessWidget {
+  // ignore: public_member_api_docs
   const HomeScreen({super.key});
 
   @override

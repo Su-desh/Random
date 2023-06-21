@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:random/chat/conversations/conversation_card.dart';
 
+/// Widget to show the list of all Conversations
 class ChatScreen extends StatelessWidget {
+  // ignore: public_member_api_docs
   const ChatScreen({super.key});
 
   @override

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:random/chat/new/new_user_state.dart';
 import 'package:random/main.dart';
 
-
+/// message input to send to the new connected user
 Widget chatInputWidgetFunc() {
   //for handling message text changes
   final textController = TextEditingController();
@@ -81,7 +81,7 @@ Widget chatInputWidgetFunc() {
                   padding: const EdgeInsets.only(
                       top: 10, bottom: 10, right: 5, left: 10),
                   shape: const CircleBorder(),
-                  color:val.isConnected ? Colors.green: Colors.red,
+                  color: val.isConnected ? Colors.green : Colors.red,
                   child: const Icon(Icons.send, color: Colors.white, size: 30),
                 ))
       ],

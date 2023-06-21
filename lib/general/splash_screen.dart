@@ -6,7 +6,9 @@ import 'package:random/home_page.dart';
 
 import '../API/api.dart';
 
+/// This widget will show the splash screen
 class SplashScreen extends StatefulWidget {
+  // ignore: public_member_api_docs
   const SplashScreen({super.key});
 
   @override

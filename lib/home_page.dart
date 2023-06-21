@@ -4,7 +4,9 @@ import 'package:random/home_screen.dart';
 import 'package:random/chat/friends/friends_screen.dart';
 import 'package:random/general/side_drawer.dart';
 
+///Home page widget
 class HomePage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const HomePage({super.key});
 
   @override

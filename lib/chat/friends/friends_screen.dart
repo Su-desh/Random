@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/friends/friend_card.dart';
 
+/// widget to show all the friends list for this logged in user
 class PeopleScreen extends StatelessWidget {
+  // ignore: public_member_api_docs
   const PeopleScreen({super.key});
 
   @override
