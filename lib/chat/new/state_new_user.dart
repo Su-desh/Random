@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:random/API/api.dart';
@@ -22,12 +24,11 @@ class NewConnect extends GetxController {
 
   /// This function is used for searching the new user to chat with
   Future<void> searchNewConnectFunc() async {
-    //set this user searching true
-    // APIs.firestoreDB
-    //     .collection('users')
-    //     .doc(APIs.me.user_UID)
-    //     .set({'is_searching_new': true});
-
+    if (isConnected) {
+      await endThisConnectedChat();
+    }
+    // set this user searching true
+    updateSearchingField(true);
 //search another user
     APIs.firestoreDB
         .collection("users")
@@ -42,13 +43,15 @@ class NewConnect extends GetxController {
         if (querySnapshot.docs.isEmpty) {
           print('searching users list is empty');
         } else if (querySnapshot.docs.isNotEmpty) {
-          final connectedUserData = querySnapshot.docs.first.data();
-          //connected now change the searching to false
-          querySnapshot.docs.first.data()['is_searching_new'] = false;
+          final connectedUserData = querySnapshot
+              .docs[Random().nextInt(querySnapshot.docs.length)]
+              .data();
           connectedWithChatUser =
               NewConnectedChatUser.fromJson(connectedUserData);
-
           isConnected = true;
+          //now user is connected with someone
+          updateSearchingField(false);
+
           update();
         }
       },
@@ -56,17 +59,26 @@ class NewConnect extends GetxController {
     );
   }
 
+  /// update searching field bool
+  static Future<void> updateSearchingField(bool isSearching) async {
+    APIs.firestoreDB.collection('users').doc(APIs.user.uid).update({
+      'is_searching_new': isSearching,
+    });
+  }
+
   /// This function will be triggered when the user want to end the chat completely
   Future<void> endThisConnectedChat() async {
     await APIs.firestoreDB
-        .collection('temp')
-        .doc(APIs.getConversationID(connectedWithChatUser.user_UID))
-        .delete()
-        .then(
-          (doc) => print("Document deleted"),
-          onError: (e) => print("Error updating document $e"),
-        );
-    // isConnected = false;
+        .collection(
+            'temp/${APIs.getConversationID(connectedWithChatUser.user_UID)}/messages/')
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+        print('Deleted $ds');
+      }
+    });
+    isConnected = false;
     update();
   }
 

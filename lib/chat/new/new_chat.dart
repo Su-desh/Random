@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/chat/new/chat_input.dart';
 import 'package:random/chat/new/skip_endchat.dart';
-import 'package:random/chat/new/new_user_state.dart';
+import 'package:random/chat/new/state_new_user.dart';
 import 'package:random/main.dart';
 
 import '../../helper/message_card.dart';
@@ -103,7 +103,7 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
                                         reverse: true,
                                         itemCount: _list.length,
                                         padding: EdgeInsets.only(
-                                            top: Get.height * .01),
+                                            top: Get.height * 0.01),
                                         physics: const BouncingScrollPhysics(),
                                         itemBuilder: (context, index) {
                                           return MessageCard(
@@ -119,11 +119,12 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
                             },
                           )
                         : Center(
-                            child: MaterialButton(
+                            child: ElevatedButton(
                               onPressed: () async {
                                 await value.searchNewConnectFunc();
                               },
-                              child: const Text("Click to search"),
+                              child: const Text("Click here to search",
+                                  style: TextStyle(fontSize: 20)),
                             ),
                           )),
 

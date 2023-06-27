@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:random/API/api.dart';
-import 'package:random/chat/new/new_user_state.dart';
+import 'package:random/chat/friends/state_friend.dart';
+import 'package:random/chat/new/state_new_user.dart';
 import 'package:random/general/splash_screen.dart';
 
 import 'firebase_options.dart';
@@ -21,6 +22,9 @@ void main() async {
 
 /// instance of newConnect class
 final newConnect = NewConnect();
+
+/// instance of Friend Class
+final friendClass = FriendState();
 
 ///First widget to be called from runApp();
 class Random extends StatefulWidget {
@@ -65,7 +69,7 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(useMaterial3: true),
+      theme: ThemeData(useMaterial3: true),
       home: StreamBuilder(
           stream: APIs.firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {

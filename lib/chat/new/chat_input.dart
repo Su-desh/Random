@@ -1,7 +1,7 @@
 // bottom chat input field
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:random/chat/new/new_user_state.dart';
+import 'package:random/chat/new/state_new_user.dart';
 import 'package:random/main.dart';
 
 /// message input to send to the new connected user
