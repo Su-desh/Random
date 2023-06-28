@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/chat/new/new_chat.dart';
+import 'package:random/main.dart';
 
 /// widget to show home Screen of the app
 class HomeScreen extends StatelessWidget {
@@ -19,10 +20,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: () {
-            Get.to(
-              const ChatWithNewPerson(),
-            );
+          onPressed: () async {
+            if (newConnect.isConnected == false) {
+              await newConnect.searchNewConnectFunc();
+            }
+            Get.to(const ChatWithNewPerson());
           },
           child: const Text('Random'),
         )

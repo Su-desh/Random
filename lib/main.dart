@@ -6,6 +6,8 @@ import 'package:random/API/api.dart';
 import 'package:random/chat/friends/state_friend.dart';
 import 'package:random/chat/new/state_new_user.dart';
 import 'package:random/general/splash_screen.dart';
+import 'package:random/general/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_options.dart';
 
@@ -16,9 +18,17 @@ void main() async {
   //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  sharedPreferences = await SharedPreferences.getInstance();
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.black, // transparent status bar
+  ));
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(const Random()));
 }
+
+///instance of sharedPreferences
+late SharedPreferences sharedPreferences;
 
 /// instance of newConnect class
 final newConnect = NewConnect();
@@ -26,11 +36,13 @@ final newConnect = NewConnect();
 /// instance of Friend Class
 final friendClass = FriendState();
 
+///theme
+final themeNotifier = ThemeNotifier();
+
 ///First widget to be called from runApp();
 class Random extends StatefulWidget {
   // ignore: public_member_api_docs
   const Random({super.key});
-
   @override
   State<Random> createState() => _RandomState();
 }
@@ -53,7 +65,7 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.resumed:
         //Execute the code here when user come back the app.
-        //In my case, I needed to show if user active or not,
+        //I needed to show if user active or not,
         APIs.updateActiveStatus(true);
         break;
       case AppLifecycleState.paused:
@@ -67,10 +79,12 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
-      home: StreamBuilder(
+    return GetBuilder<ThemeNotifier>(
+      init: themeNotifier,
+      builder: (value) => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: value.lightMode! ? light_mode : dark_mode,
+        home: StreamBuilder(
           stream: APIs.firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -86,7 +100,9 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
               APIs.getSelfInfo();
               return const SplashScreen();
             }
-          }),
+          },
+        ),
+      ),
     );
   }
 }

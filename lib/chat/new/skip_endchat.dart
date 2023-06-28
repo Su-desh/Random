@@ -11,42 +11,33 @@ Widget skipToNextEndChatWidget() {
       color: Colors.blue,
       height: 40,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: TextButton(
-                onPressed: () async {
-                  await value.searchNewConnectFunc();
-                },
-                child: const Text('Skip To Next')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: TextButton(
-                onPressed: () async {
-                  if (newConnect.isConnected) {
-                    await value.endThisConnectedChat();
-                  } else {
-                    Get.snackbar('error', 'you are not connected !!',
-                        duration: const Duration(seconds: 2));
-                  }
-                },
-                child: const Text('End This Chat')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0),
-            child: GestureDetector(
-                onTap: () async {
-                  if (newConnect.isConnected) {
-                    //send friend request
-                    
-                  } else {
-                    Get.snackbar('error', 'you are not connected !!',
-                        duration: const Duration(seconds: 2));
-                  }
-                },
-                child: const Icon(Icons.person_add_alt_rounded)),
-          )
+          ElevatedButton(
+              onPressed: () async {
+                await value.searchNewConnectFunc();
+              },
+              child: const Text('Skip To Next')),
+          ElevatedButton(
+              onPressed: () async {
+                if (newConnect.isConnected) {
+                  await value.endThisConnectedChat();
+                } else {
+                  Get.snackbar('error', 'you are not connected !!',
+                      duration: const Duration(seconds: 2));
+                }
+              },
+              child: const Text('End This Chat')),
+          ElevatedButton(
+              onPressed: () async {
+                if (newConnect.isConnected) {
+                  //send friend request
+                } else {
+                  Get.snackbar('error', 'you are not connected !!',
+                      duration: const Duration(seconds: 2));
+                }
+              },
+              child: const Icon(Icons.person_add_alt_rounded))
         ],
       ),
     ),

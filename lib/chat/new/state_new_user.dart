@@ -13,6 +13,9 @@ class NewConnect extends GetxController {
   /// whether this user is connected with new user to chat
   bool isConnected = false;
 
+  ///wheather to have circular progress
+  bool showProgressIndicator = false;
+
   /// for storing Connected user information
   NewConnectedChatUser connectedWithChatUser = NewConnectedChatUser(
     is_online: true,
@@ -27,6 +30,8 @@ class NewConnect extends GetxController {
     if (isConnected) {
       await endThisConnectedChat();
     }
+    showProgressIndicator = true;
+    update();
     // set this user searching true
     updateSearchingField(true);
 //search another user
@@ -51,7 +56,7 @@ class NewConnect extends GetxController {
           isConnected = true;
           //now user is connected with someone
           updateSearchingField(false);
-
+          showProgressIndicator = false;
           update();
         }
       },

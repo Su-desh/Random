@@ -55,7 +55,6 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
             //app bar
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(45, 135, 130, 129),
-              automaticallyImplyLeading: false,
               flexibleSpace: _appBar(),
             ),
             backgroundColor: const Color.fromARGB(255, 26, 101, 139),
@@ -136,67 +135,71 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
 
   // app bar widget
   Widget _appBar() {
-    return StreamBuilder(
-        stream: APIs.getUserInfo(widget.user.user_UID),
-        builder: (context, snapshot) {
-          final data = snapshot.data?.docs;
-          final list =
-              data?.map((e) => ChatUser.fromJson(e.data())).toList() ?? [];
+    return Card(
+      child: StreamBuilder(
+          stream: APIs.getUserInfo(widget.user.user_UID),
+          builder: (context, snapshot) {
+            final data = snapshot.data?.docs;
+            final list =
+                data?.map((e) => ChatUser.fromJson(e.data())).toList() ?? [];
 
-          return Row(
-            children: [
-              //back button
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back_sharp,
-                        color: Colors.black54)),
-              ),
+            return Row(
+              children: [
+                //back button
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.arrow_back_sharp,
+                          color: Colors.black54)),
+                ),
 
-              //user profile picture
-              ClipRRect(
-                  child: CircleAvatar(
-                child: Text(widget.user.username[0]),
-              )),
+                //user profile picture
+                ClipRRect(
+                    child: CircleAvatar(
+                  child: Text(widget.user.username[0]),
+                )),
 
-              //for adding some space
-              const SizedBox(width: 10),
+                //for adding some space
+                const SizedBox(width: 10),
 
-              //user name & last seen time
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //user name
-                  Text(
-                      list.isNotEmpty ? list[0].username : widget.user.username,
-                      style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500)),
+                //user name & last seen time
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //user name
+                    Text(
+                        list.isNotEmpty
+                            ? list[0].username
+                            : widget.user.username,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500)),
 
-                  //for adding some space
-                  const SizedBox(height: 2),
+                    //for adding some space
+                    const SizedBox(height: 2),
 
-                  //last seen time of user
-                  Text(
-                      list.isNotEmpty
-                          ? list[0].is_online
-                              ? 'Online'
-                              : MyDateUtil.getLastActiveTime(
-                                  context: context,
-                                  lastActive: list[0].last_seen)
-                          : MyDateUtil.getLastActiveTime(
-                              context: context,
-                              lastActive: widget.user.last_seen),
-                      style:
-                          const TextStyle(fontSize: 13, color: Colors.black)),
-                ],
-              )
-            ],
-          );
-        });
+                    //last seen time of user
+                    Text(
+                        list.isNotEmpty
+                            ? list[0].is_online
+                                ? 'Online'
+                                : MyDateUtil.getLastActiveTime(
+                                    context: context,
+                                    lastActive: list[0].last_seen)
+                            : MyDateUtil.getLastActiveTime(
+                                context: context,
+                                lastActive: widget.user.last_seen),
+                        style:
+                            const TextStyle(fontSize: 13, color: Colors.black)),
+                  ],
+                )
+              ],
+            );
+          }),
+    );
   }
 
   // bottom chat input field

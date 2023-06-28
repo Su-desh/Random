@@ -1,8 +1,13 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:random/chat/conversations/conversation_screen.dart';
 import 'package:random/home_screen.dart';
 import 'package:random/chat/friends/friends_screen.dart';
 import 'package:random/general/side_drawer.dart';
+import 'package:random/main.dart';
+
+import 'general/theme.dart';
 
 ///Home page widget
 class HomePage extends StatefulWidget {
@@ -31,25 +36,44 @@ class _HomePageState extends State<HomePage> {
         break;
     }
 
-    return Scaffold(
-      drawer: const SideDrawer(),
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Random'),
-      ),
-      body: child,
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _index,
-          onTap: (int index) {
-            setState(() {
-              _index = index;
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.message), label: "Chat"),
-            BottomNavigationBarItem(icon: Icon(Icons.group), label: "People"),
+    return SafeArea(
+      child: GetBuilder<ThemeNotifier>(
+        init: themeNotifier,
+        builder: (value) => Scaffold(
+          drawer: const SideDrawer(),
+          appBar:
+              AppBar(centerTitle: true, title: const Text('Random'), actions: [
+            GestureDetector(
+              onTap: () {
+                value.toggleChangeTheme();
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: value.lightMode!
+                    ? const Icon(Icons.dark_mode)
+                    : const Icon(Icons.light_mode),
+              ),
+            ),
           ]),
+          body: child,
+          bottomNavigationBar: CurvedNavigationBar(
+            backgroundColor: Colors.deepPurple,
+            color: value.lightMode! ? Colors.white : Colors.black87,
+            height: 50,
+            animationDuration: const Duration(milliseconds: 300),
+            items: const <Widget>[
+              Icon(Icons.home, size: 25),
+              Icon(Icons.message, size: 25),
+              Icon(Icons.group, size: 25),
+            ],
+            onTap: (int index) {
+              setState(() {
+                _index = index;
+              });
+            },
+          ),
+        ),
+      ),
     );
   }
 }
