@@ -4,15 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/main.dart';
 
-ThemeData light_mode = ThemeData(
-  brightness: Brightness.light,
-  useMaterial3: true,
-);
+ThemeData light_mode =
+    ThemeData(brightness: Brightness.light, useMaterial3: true);
 
-ThemeData dark_mode = ThemeData(
-  brightness: Brightness.dark,
-  useMaterial3: true,
-);
+ThemeData dark_mode =
+    ThemeData(brightness: Brightness.dark, useMaterial3: true);
 
 class ThemeNotifier extends GetxController {
   final String key = 'theme';

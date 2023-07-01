@@ -18,26 +18,28 @@ Widget skipToNextEndChatWidget() {
                 await value.searchNewConnectFunc();
               },
               child: const Text('Skip To Next')),
-          ElevatedButton(
-              onPressed: () async {
-                if (newConnect.isConnected) {
-                  await value.endThisConnectedChat();
-                } else {
-                  Get.snackbar('error', 'you are not connected !!',
-                      duration: const Duration(seconds: 2));
-                }
-              },
-              child: const Text('End This Chat')),
-          ElevatedButton(
-              onPressed: () async {
-                if (newConnect.isConnected) {
-                  //send friend request
-                } else {
-                  Get.snackbar('error', 'you are not connected !!',
-                      duration: const Duration(seconds: 2));
-                }
-              },
-              child: const Icon(Icons.person_add_alt_rounded))
+          if (value.isConnected)
+            ElevatedButton(
+                onPressed: () async {
+                  if (newConnect.isConnected) {
+                    await value.endThisConnectedChat();
+                  } else {
+                    Get.snackbar('error', 'you are not connected !!',
+                        duration: const Duration(seconds: 2));
+                  }
+                },
+                child: const Text('End This Chat')),
+          if (value.isConnected)
+            ElevatedButton(
+                onPressed: () async {
+                  if (newConnect.isConnected) {
+                    //send friend request
+                  } else {
+                    Get.snackbar('error', 'you are not connected !!',
+                        duration: const Duration(seconds: 2));
+                  }
+                },
+                child: const Icon(Icons.person_add_alt_rounded))
         ],
       ),
     ),

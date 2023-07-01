@@ -10,25 +10,37 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text(
-            'Hi, click on the Random button below to connect with a completely random stranger, you can chat with them and make new friends here',
-            style: TextStyle(fontSize: 20),
+    return Container(
+      color: Colors.transparent,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 5, right: 5),
+            child: Card(
+              color: Colors.blue[200],
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  'Hi, click on the Random button below to connect with a completely random stranger, you can chat with them and make new friends here',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
           ),
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            if (newConnect.isConnected == false) {
-              await newConnect.searchNewConnectFunc();
-            }
-            Get.to(const ChatWithNewPerson());
-          },
-          child: const Text('Random'),
-        )
-      ],
+          ElevatedButton(
+            onPressed: () async {
+              if (newConnect.isConnected == false) {
+                await newConnect.searchNewConnectFunc();
+              }
+              Get.to(const ChatWithNewPerson());
+            },
+            child: const Text(
+              'Random Search',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

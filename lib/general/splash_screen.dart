@@ -18,6 +18,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    splashDelay();
+  }
+
+  void splashDelay() {
     Future.delayed(const Duration(seconds: 2), () {
       if (APIs.firebaseAuth.currentUser != null) {
         print('\nUser: ${APIs.firebaseAuth.currentUser}');
@@ -34,14 +38,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        //app logo
         Positioned(
           top: Get.height * 0.15,
           right: Get.width * 0.25,
           width: Get.width * 0.5,
           child: Image.asset('assets/icon.png'),
         ),
-
         Positioned(
           bottom: Get.height * 0.15,
           width: Get.width,

@@ -35,7 +35,6 @@ Widget chatInputWidgetFunc() {
                   controller: textController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  onTap: () {},
                   decoration: const InputDecoration(
                       hintText: 'Type Something...',
                       hintStyle: TextStyle(color: Colors.blueAccent),
@@ -67,23 +66,24 @@ Widget chatInputWidgetFunc() {
 
         //send message button
         GetBuilder<NewConnect>(
-            init: newConnect,
-            // You can initialize your controller here the first time. Don't use init in your other GetBuilders of same controller
-            builder: (val) => MaterialButton(
-                  onPressed: () {
-                    if (val.isConnected && textController.text.isNotEmpty) {
-                      val.sendMessageOfNewConnect(
-                          val.connectedWithChatUser, textController.text);
-                      textController.text = '';
-                    }
-                  },
-                  minWidth: 0,
-                  padding: const EdgeInsets.only(
-                      top: 10, bottom: 10, right: 5, left: 10),
-                  shape: const CircleBorder(),
-                  color: val.isConnected ? Colors.green : Colors.red,
-                  child: const Icon(Icons.send, color: Colors.white, size: 30),
-                ))
+          init: newConnect,
+          // You can initialize your controller here the first time. Don't use init in your other GetBuilders of same controller
+          builder: (val) => MaterialButton(
+            onPressed: () {
+              if (val.isConnected && textController.text.isNotEmpty) {
+                val.sendMessageOfNewConnect(
+                    val.connectedWithChatUser, textController.text);
+                textController.text = '';
+              }
+            },
+            minWidth: 0,
+            padding:
+                const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
+            shape: const CircleBorder(),
+            color: val.isConnected ? Colors.green : Colors.red,
+            child: const Icon(Icons.send, color: Colors.white, size: 30),
+          ),
+        ),
       ],
     ),
   );

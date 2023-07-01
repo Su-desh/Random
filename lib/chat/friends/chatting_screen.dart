@@ -1,4 +1,6 @@
-import 'dart:developer';
+// ignore_for_file: public_member_api_docs
+
+import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -12,12 +14,8 @@ import '../../helper/my_date_util.dart';
 import '../../models/chat_user.dart';
 import '../../models/message.dart';
 
-/// Chating Screen page for the users who are friend with each other
 class ChattingScreenPage extends StatefulWidget {
-  /// getting friend(user) model
   final ChatUser user;
-
-  // ignore: public_member_api_docs
   const ChattingScreenPage({super.key, required this.user});
 
   @override
@@ -35,30 +33,67 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
   //isUploading -- for checking if image is uploading or not?
   bool _showEmoji = false, _isUploading = false;
 
+  //if emojis are shown & back button is pressed then hide emojis
+  //or else simple close current screen on back button click
+  Future<bool> _hideEmoji() {
+    if (_showEmoji) {
+      setState(() => _showEmoji = !_showEmoji);
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
+  }
+
+  //pick image from gallery
+  Future<void> _pickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    // Picking multiple images
+    final List<XFile> images = await picker.pickMultiImage(imageQuality: 40);
+    // uploading & sending image one by one
+    for (var i in images) {
+      print('Image Path: ${i.path}');
+      setState(() => _isUploading = true);
+      await APIs.sendChatImage(widget.user, File(i.path));
+      setState(() => _isUploading = false);
+    }
+  }
+
+//take image from camera button
+  Future<void> _takeImageFromCamera() async {
+    final ImagePicker picker = ImagePicker();
+    // Pick an image
+    final XFile? image =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 40);
+    if (image != null) {
+      developer.log('Image Path: ${image.path}');
+      setState(() => _isUploading = true);
+
+      await APIs.sendChatImage(widget.user, File(image.path));
+      setState(() => _isUploading = false);
+    }
+  }
+
+//send message
+  void _sendMessage() {
+    if (_textController.text.isNotEmpty) {
+      APIs.sendMessage(widget.user, _textController.text, Type.text);
+      _textController.text = '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: SafeArea(
         child: WillPopScope(
-          //if emojis are shown & back button is pressed then hide emojis
-          //or else simple close current screen on back button click
-          onWillPop: () {
-            if (_showEmoji) {
-              setState(() => _showEmoji = !_showEmoji);
-              return Future.value(false);
-            } else {
-              return Future.value(true);
-            }
-          },
+          onWillPop: _hideEmoji,
           child: Scaffold(
-            //app bar
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(45, 135, 130, 129),
               flexibleSpace: _appBar(),
             ),
             backgroundColor: const Color.fromARGB(255, 26, 101, 139),
-            //body
             body: Column(
               children: [
                 Expanded(
@@ -118,10 +153,10 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
                     height: Get.height * 0.35,
                     child: EmojiPicker(
                       textEditingController: _textController,
-                      config: Config(
-                        bgColor: const Color.fromARGB(255, 234, 248, 255),
+                      config: const Config(
+                        bgColor: Color.fromARGB(255, 234, 248, 255),
                         columns: 8,
-                        emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                        emojiSizeMax: 32 * (1.0),
                       ),
                     ),
                   )
@@ -241,41 +276,13 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
 
                   //pick image from gallery button
                   IconButton(
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Picking multiple images
-                        final List<XFile> images =
-                            await picker.pickMultiImage(imageQuality: 40);
-
-                        // uploading & sending image one by one
-                        for (var i in images) {
-                          print('Image Path: ${i.path}');
-                          setState(() => _isUploading = true);
-                          await APIs.sendChatImage(widget.user, File(i.path));
-                          setState(() => _isUploading = false);
-                        }
-                      },
+                      onPressed: _pickImageFromGallery,
                       icon: const Icon(Icons.image,
                           color: Colors.blueAccent, size: 26)),
 
                   //take image from camera button
                   IconButton(
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Pick an image
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.camera, imageQuality: 40);
-                        if (image != null) {
-                          log('Image Path: ${image.path}');
-                          setState(() => _isUploading = true);
-
-                          await APIs.sendChatImage(
-                              widget.user, File(image.path));
-                          setState(() => _isUploading = false);
-                        }
-                      },
+                      onPressed: _takeImageFromCamera,
                       icon: const Icon(Icons.camera_alt_rounded,
                           color: Colors.blueAccent, size: 26)),
 
@@ -288,12 +295,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
 
           //send message button
           MaterialButton(
-            onPressed: () {
-              if (_textController.text.isNotEmpty) {
-                APIs.sendMessage(widget.user, _textController.text, Type.text);
-                _textController.text = '';
-              }
-            },
+            onPressed: _sendMessage,
             minWidth: 0,
             padding:
                 const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),

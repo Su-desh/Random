@@ -36,41 +36,46 @@ class _HomePageState extends State<HomePage> {
         break;
     }
 
-    return SafeArea(
-      child: GetBuilder<ThemeNotifier>(
-        init: themeNotifier,
-        builder: (value) => Scaffold(
-          drawer: const SideDrawer(),
-          appBar:
-              AppBar(centerTitle: true, title: const Text('Random'), actions: [
-            GestureDetector(
-              onTap: () {
-                value.toggleChangeTheme();
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SafeArea(
+        child: GetBuilder<ThemeNotifier>(
+          init: themeNotifier,
+          builder: (value) => Scaffold(
+            drawer: const SideDrawer(),
+            appBar: AppBar(
+                centerTitle: true,
+                title: const Text('Random'),
+                actions: [
+                  GestureDetector(
+                    onTap: () {
+                      value.toggleChangeTheme();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: value.lightMode!
+                          ? const Icon(Icons.dark_mode)
+                          : const Icon(Icons.light_mode),
+                    ),
+                  ),
+                ]),
+            body: child,
+            bottomNavigationBar: CurvedNavigationBar(
+              backgroundColor: Colors.deepPurple,
+              color: value.lightMode! ? Colors.white : Colors.black87,
+              height: 50,
+              animationDuration: const Duration(milliseconds: 300),
+              items: const <Widget>[
+                Icon(Icons.home, size: 25),
+                Icon(Icons.message, size: 25),
+                Icon(Icons.group, size: 25),
+              ],
+              onTap: (int index) {
+                setState(() {
+                  _index = index;
+                });
               },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: value.lightMode!
-                    ? const Icon(Icons.dark_mode)
-                    : const Icon(Icons.light_mode),
-              ),
             ),
-          ]),
-          body: child,
-          bottomNavigationBar: CurvedNavigationBar(
-            backgroundColor: Colors.deepPurple,
-            color: value.lightMode! ? Colors.white : Colors.black87,
-            height: 50,
-            animationDuration: const Duration(milliseconds: 300),
-            items: const <Widget>[
-              Icon(Icons.home, size: 25),
-              Icon(Icons.message, size: 25),
-              Icon(Icons.group, size: 25),
-            ],
-            onTap: (int index) {
-              setState(() {
-                _index = index;
-              });
-            },
           ),
         ),
       ),
