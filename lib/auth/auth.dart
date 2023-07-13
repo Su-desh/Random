@@ -5,6 +5,7 @@ import 'package:random/API/api.dart';
 class AuthService {
   /// sign out user
   static Future<void> signOutThisUser() async {
+    await APIs.updateActiveStatus(false);
     await APIs.firebaseAuth.signOut();
   }
 

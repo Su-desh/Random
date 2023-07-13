@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/auth/auth.dart';
+import 'package:random/auth/signin.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:store_redirect/store_redirect.dart';
 
@@ -79,7 +81,27 @@ class SideDrawer extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.privacy_tip),
-                      Text('    Privacy Policy', style: TextStyle(fontSize: 18))
+                      Text('    Privacy Policy',
+                          style: TextStyle(fontSize: 18)),
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  AuthService.signOutThisUser();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                        builder: (context) => const SignInScreen()),
+                  );
+                  print('current user ${APIs.me.username} sign out done !!!');
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 10, top: 20),
+                  child: Row(
+                    children: [
+                      Icon(Icons.logout),
+                      Text('    Sign out', style: TextStyle(fontSize: 18)),
                     ],
                   ),
                 ),

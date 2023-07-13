@@ -5,20 +5,9 @@ import 'package:random/chat/friends/state_friend.dart';
 import 'package:random/main.dart';
 
 /// widget to show all the friends list for this logged in user
-class PeopleScreen extends StatefulWidget {
+class PeopleScreen extends StatelessWidget {
   // ignore: public_member_api_docs
   const PeopleScreen({super.key});
-
-  @override
-  State<PeopleScreen> createState() => _PeopleScreenState();
-}
-
-class _PeopleScreenState extends State<PeopleScreen> {
-  @override
-  void initState() {
-    super.initState();
-    friendClass.getChatUserFriendsFn();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +30,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
                     shrinkWrap: true,
                     itemCount: value.friendUIdList.length,
                     itemBuilder: (context, index) {
-                      return friendCardWidget(
-                          context: context,
+                      return FriendCard(
                           chatUserUId: value.friendUIdList[index]);
                     },
                   )

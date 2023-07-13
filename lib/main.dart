@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/friends/state_friend.dart';
 import 'package:random/chat/new/state_new_user.dart';
-import 'package:random/general/splash_screen.dart';
 import 'package:random/general/theme.dart';
+import 'package:random/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'auth/signin.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -64,7 +65,6 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
-        //Execute the code here when user come back the app.
         //I needed to show if user active or not,
         APIs.updateActiveStatus(true);
         break;
@@ -84,23 +84,18 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
       builder: (value) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: value.lightMode! ? light_mode : dark_mode,
-        home: StreamBuilder(
-          stream: APIs.firebaseAuth.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              //return const HomePage();
-              APIs.updateActiveStatus(true);
-              //calling this api to get the logged in user info
-              APIs.getSelfInfo();
-              return const SplashScreen();
-            } else {
-              //return const SignInScreen();
-              APIs.updateActiveStatus(true);
-              //calling this api to get the logged in user info
-              APIs.getSelfInfo();
-              return const SplashScreen();
-            }
-          },
+        home: Container(
+          color: Colors.transparent,
+          child: StreamBuilder(
+            stream: APIs.firebaseAuth.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const HomePage();
+              } else {
+                return const SignInScreen();
+              }
+            },
+          ),
         ),
       ),
     );
