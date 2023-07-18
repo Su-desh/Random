@@ -21,7 +21,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _index = 0;
-  List<Widget> pages = const [HomeScreen(), ChatScreen(), PeopleScreen()];
+  List<Widget> pages = const [
+    HomeScreen(),
+    ConversationScreen(),
+    PeopleScreen()
+  ];
 
   @override
   void initState() {
@@ -67,10 +71,11 @@ class _HomePageState extends State<HomePage> {
               color: value.lightMode! ? Colors.white : Colors.black87,
               height: 50,
               animationDuration: const Duration(milliseconds: 300),
-              items: const <Widget>[
-                Icon(Icons.home, size: 25),
-                Icon(Icons.message, size: 25),
-                Icon(Icons.group, size: 25),
+              items: <Widget>[
+                const Icon(Icons.home, size: 25),
+                Badge.count(
+                    count: 1, child: const Icon(Icons.message, size: 25)),
+                const Icon(Icons.group, size: 25),
               ],
               onTap: (int index) {
                 setState(() {

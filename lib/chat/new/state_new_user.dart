@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:random/API/api.dart';
-import 'package:random/models/chat_user.dart';
 import 'package:random/models/new_connect.dart';
 
 import '../../models/message.dart';
@@ -15,6 +14,9 @@ class NewConnect extends GetxController {
 
   ///wheather to have circular progress
   bool showProgressIndicator = false;
+
+  //last message info (if null --> no message)
+  Message? last_message;
 
   /// for storing Connected user information
   NewConnectedChatUser connectedWithChatUser = NewConnectedChatUser(
@@ -73,27 +75,37 @@ class NewConnect extends GetxController {
 
   /// This function will be triggered when the user want to end the chat completely
   Future<void> endThisConnectedChat() async {
+    //remove the last message details
+    last_message = null;
+    //delete the last msg related data
+    await APIs.firestoreDB
+        .collection('temp')
+        .doc(APIs.getConversationID(connectedWithChatUser.user_UID))
+        .update({
+      'fromId': FieldValue.delete(),
+      'msg': FieldValue.delete(),
+      'read': FieldValue.delete(),
+      'sent': FieldValue.delete(),
+      'toId': FieldValue.delete(),
+      'type': FieldValue.delete(),
+    });
+
+    //delete the temp chats
     await APIs.firestoreDB
         .collection(
             'temp/${APIs.getConversationID(connectedWithChatUser.user_UID)}/messages/')
         .get()
-        .then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs) {
-        ds.reference.delete();
-        print('Deleted $ds');
-      }
-    });
+        .then(
+      (snapshot) {
+        for (DocumentSnapshot ds in snapshot.docs) {
+          ds.reference.delete();
+          print('Deleted $ds');
+        }
+      },
+    );
+
     isConnected = false;
     update();
-  }
-
-  /// for getting specific user info
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getNewConnectedUserInfo(
-      String userUid) {
-    return APIs.firestoreDB
-        .collection('users')
-        .where('user_UID', isEqualTo: userUid)
-        .snapshots();
   }
 
   /// for sending new message in chat
@@ -110,9 +122,16 @@ class NewConnect extends GetxController {
         fromId: APIs.user.uid,
         sent: time);
 
+    //send message
     final ref = APIs.firestoreDB.collection(
         'temp/${APIs.getConversationID(chatUser.user_UID)}/messages/');
     await ref.doc(time).set(message.toJson());
+
+    // update the last msg
+    final docRef = APIs.firestoreDB
+        .collection('temp')
+        .doc(APIs.getConversationID(chatUser.user_UID));
+    await docRef.set(message.toJson());
   }
 
   /// for getting all messages of a specific conversation from firestore database
@@ -125,8 +144,8 @@ class NewConnect extends GetxController {
   }
 
   /// get only last message of a specific chat
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessageOfNewConnect(
-      ChatUser user) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessageOfNewConnect(
+      NewConnectedChatUser user) {
     return APIs.firestoreDB
         .collection('temp/${APIs.getConversationID(user.user_UID)}/messages/')
         .orderBy('sent', descending: true)

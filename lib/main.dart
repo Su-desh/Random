@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:random/API/api.dart';
+import 'package:random/chat/conversations/state_conversation.dart';
 import 'package:random/chat/friends/state_friend.dart';
 import 'package:random/chat/new/state_new_user.dart';
 import 'package:random/general/theme.dart';
@@ -36,6 +37,9 @@ final newConnect = NewConnect();
 
 /// instance of Friend Class
 final friendClass = FriendState();
+
+///instance of conversation class
+final conversationClass = ConversationState();
 
 ///theme
 final themeNotifier = ThemeNotifier();

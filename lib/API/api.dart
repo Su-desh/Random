@@ -131,13 +131,46 @@ class APIs {
         fromId: user.uid,
         sent: time);
 
+// send the message
     final ref = firestoreDB
         .collection('chats/${getConversationID(chatUser.user_UID)}/messages/');
     await ref.doc(time).set(message.toJson());
+
+    // update the last msg
+    final docRef = firestoreDB
+        .collection('chats')
+        .doc(getConversationID(chatUser.user_UID));
+    //idea is to compare both and keep the small id first,
+    //so that unnecssary write can be reduced
+    //this list will help in fetching the conversation (since the 'where' was not suitable for 2-sided)
+    int res = me.user_UID.compareTo(chatUser.user_UID);
+    List toFrom = [];
+    List userNames = [];
+    if (res < 0) {
+      //me.user_UID smaller
+      toFrom = [me.user_UID, chatUser.user_UID];
+      userNames = [me.username, chatUser.username];
+    } else {
+      // chatuser.UId smaller
+      toFrom = [chatUser.user_UID, me.user_UID];
+      userNames = [chatUser.username, me.username];
+    }
+    await docRef.set({'userNames': userNames, 'ToFrom': toFrom});
+  }
+
+  ///update the last msg read status
+  static Future<void> updateLastMsgReadStatus(String chatWithId) async {
+    firestoreDB
+        .collection('chats')
+        .doc(getConversationID(chatWithId))
+        .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
   }
 
   /// update read status of message
   static Future<void> updateMessageReadStatus(Message message) async {
+    //update last msg read status
+    updateLastMsgReadStatus(message.fromId);
+    //update the conversation msg read status
     firestoreDB
         .collection('chats/${getConversationID(message.fromId)}/messages/')
         .doc(message.sent)
@@ -160,16 +193,6 @@ class APIs {
     //updating image in firestore database
     final imageUrl = await ref.getDownloadURL();
     await sendMessage(chatUser, imageUrl, Type.image);
-  }
-
-  /// get only last message of a specific chat
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(
-      ChatUser user) {
-    return firestoreDB
-        .collection('chats/${getConversationID(user.user_UID)}/messages/')
-        .orderBy('sent', descending: true)
-        .limit(1)
-        .snapshots();
   }
 
   /// update online or last active status of user

@@ -130,9 +130,9 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
                 ),
 
                 //skip and end chat
-                skipToNextEndChatWidget(),
+                const SkipToNextEndChat(),
                 //chat input filed
-                chatInputWidgetFunc(),
+                const ChatMessageInput(),
               ],
             ),
           ),
