@@ -37,8 +37,11 @@ class SkipToNextEndChat extends StatelessWidget {
             if (value.isConnected)
               ElevatedButton(
                   onPressed: () async {
-                    if (newConnect.isConnected) {
+                    if (value.isConnected) {
                       //send friend request
+                      String req = '[FRIEND_REQUEST]';
+                      value.sendMessageOfNewConnect(
+                          value.connectedWithChatUser, req);
                     } else {
                       Get.snackbar('error', 'you are not connected !!',
                           duration: const Duration(seconds: 2));

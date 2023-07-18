@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/chat/new/add_ended.dart';
 
 import '../API/api.dart';
 import '../helper/my_date_util.dart';
@@ -36,44 +37,50 @@ class _MessageCardState extends State<MessageCard> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         //message content
-        Flexible(
-          child: Container(
-            padding: EdgeInsets.all(widget.message.type == Type.image
-                ? Get.width * 0.03
-                : Get.width * 0.04),
-            margin: EdgeInsets.symmetric(
-                horizontal: Get.width * 0.04, vertical: Get.height * 0.01),
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 221, 245, 255),
-                border: Border.all(color: Colors.lightBlue),
-                //making borders curved
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                    bottomRight: Radius.circular(30))),
-            child: widget.message.type == Type.text
-                ?
-                //show text
-                Text(
-                    widget.message.msg,
-                    style: const TextStyle(fontSize: 15, color: Colors.black87),
-                  )
-                :
-                //show image
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.message.msg,
-                      placeholder: (context, url) => const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.image, size: 70),
-                    ),
-                  ),
-          ),
-        ),
+        widget.message.msg == '[FRIEND_REQUEST]'
+            ? const FriendRequest(
+                canIadd: true,
+              )
+            : Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(widget.message.type == Type.image
+                      ? Get.width * 0.03
+                      : Get.width * 0.04),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: Get.width * 0.04,
+                      vertical: Get.height * 0.01),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 221, 245, 255),
+                      border: Border.all(color: Colors.lightBlue),
+                      //making borders curved
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                          bottomRight: Radius.circular(30))),
+                  child: widget.message.type == Type.text
+                      ?
+                      //show text
+                      Text(
+                          widget.message.msg,
+                          style: const TextStyle(
+                              fontSize: 15, color: Colors.black87),
+                        )
+                      :
+                      //show image
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.message.msg,
+                            placeholder: (context, url) => const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.image, size: 70),
+                          ),
+                        ),
+                ),
+              ),
 
         //message time
         Padding(
@@ -116,44 +123,49 @@ class _MessageCardState extends State<MessageCard> {
         ),
 
         //message content
-        Flexible(
-          child: Container(
-            padding: EdgeInsets.all(widget.message.type == Type.image
-                ? Get.width * 0.03
-                : Get.width * 0.04),
-            margin: EdgeInsets.symmetric(
-                horizontal: Get.width * .04, vertical: Get.height * 0.01),
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 218, 255, 176),
-                border: Border.all(color: Colors.lightGreen),
-                //making borders curved
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                    bottomLeft: Radius.circular(30))),
-            child: widget.message.type == Type.text
-                ?
-                //show text
-                Text(
-                    widget.message.msg,
-                    style: const TextStyle(fontSize: 15, color: Colors.black87),
-                  )
-                :
-                //show image
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.message.msg,
-                      placeholder: (context, url) => const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.image, size: 70),
-                    ),
-                  ),
-          ),
-        ),
+        widget.message.msg == '[FRIEND_REQUEST]'
+            ? const FriendRequest(
+                canIadd: false,
+              )
+            : Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(widget.message.type == Type.image
+                      ? Get.width * 0.03
+                      : Get.width * 0.04),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: Get.width * .04, vertical: Get.height * 0.01),
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 218, 255, 176),
+                      border: Border.all(color: Colors.lightGreen),
+                      //making borders curved
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                          bottomLeft: Radius.circular(30))),
+                  child: widget.message.type == Type.text
+                      ?
+                      //show text
+                      Text(
+                          widget.message.msg,
+                          style: const TextStyle(
+                              fontSize: 15, color: Colors.black87),
+                        )
+                      :
+                      //show image
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.message.msg,
+                            placeholder: (context, url) => const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.image, size: 70),
+                          ),
+                        ),
+                ),
+              ),
       ],
     );
   }

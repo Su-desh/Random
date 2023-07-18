@@ -15,7 +15,7 @@ class NewConnect extends GetxController {
   ///wheather to have circular progress
   bool showProgressIndicator = false;
 
-  //last message info (if null --> no message)
+  ///last message info (if null --> no message)
   Message? last_message;
 
   /// for storing Connected user information
