@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/friends/chatting_screen.dart';
 import 'package:random/models/chat_user.dart';
-import 'package:random/general/more_vert.dart';
+import 'package:random/chat/friends/more_vert.dart';
 
 class FriendCard extends StatelessWidget {
   final String chatUserUId;
@@ -34,7 +34,7 @@ class FriendCard extends StatelessWidget {
                 Get.to(ChattingScreenPage(user: chatWithUser));
               },
               child: Card(
-                  // elevation: 10,
+                  elevation: 40,
                   color: Colors.blue,
                   child: Row(children: <Widget>[
                     Expanded(
@@ -68,16 +68,19 @@ class FriendCard extends StatelessWidget {
                     )),
                     GestureDetector(
                       onTap: () {
-                        showBottomSheet(
-                            context: context,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20),
-                              ),
+                        showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
                             ),
-                            builder: (builder) {
-                              return moreVertBottomSheetWidget();
-                            });
+                          ),
+                          builder: (builder) {
+                            return FriendMoreVert(
+                              chat_user: chatWithUser,
+                            );
+                          },
+                        );
                       },
                       child: const Padding(
                         padding: EdgeInsets.only(right: 15.0),

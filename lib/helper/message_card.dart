@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/chat/new/add_ended.dart';
+import 'package:random/helper/image.dart';
 
 import '../API/api.dart';
 import '../helper/my_date_util.dart';
@@ -67,16 +67,14 @@ class _MessageCardState extends State<MessageCard> {
                         )
                       :
                       //show image
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: CachedNetworkImage(
-                            imageUrl: widget.message.msg,
-                            placeholder: (context, url) => const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.image, size: 70),
+                       GestureDetector(
+                          onTap: () {
+                            Get.to(ShowImage(imageUrl: widget.message.msg));
+                          },
+                          child: const Icon(
+                            Icons.image,
+                            color: Colors.blue,
+                         size: 100,
                           ),
                         ),
                 ),
@@ -152,16 +150,14 @@ class _MessageCardState extends State<MessageCard> {
                         )
                       :
                       //show image
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: CachedNetworkImage(
-                            imageUrl: widget.message.msg,
-                            placeholder: (context, url) => const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.image, size: 70),
+                      GestureDetector(
+                          onTap: () {
+                            Get.to(ShowImage(imageUrl: widget.message.msg));
+                          },
+                          child: const Icon(
+                            Icons.image,
+                            color: Colors.blue,
+                         size: 100,
                           ),
                         ),
                 ),
