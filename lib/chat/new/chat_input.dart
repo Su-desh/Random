@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:random/chat/new/state_new_user.dart';
 import 'package:random/main.dart';
 
+import '../../helper/dialogs.dart';
+
 /// message input to send to the new connected user
 class ChatMessageInput extends StatelessWidget {
   ///
@@ -29,7 +31,7 @@ class ChatMessageInput extends StatelessWidget {
                   //emoji button
                   IconButton(
                       onPressed: () {
-                        Get.snackbar('emoji !!',
+                        Dialogs.showGetSnackbar('emoji !!',
                             'add them to your firend list to send emoji');
                       },
                       icon: const Icon(Icons.emoji_emotions,
@@ -39,7 +41,8 @@ class ChatMessageInput extends StatelessWidget {
                       child: TextField(
                     controller: textController,
                     keyboardType: TextInputType.multiline,
-                    maxLines: null,
+                    minLines: 1,
+                    maxLines: 4,
                     decoration: const InputDecoration(
                         hintText: 'Type Something...',
                         hintStyle: TextStyle(color: Colors.blueAccent),
@@ -48,7 +51,7 @@ class ChatMessageInput extends StatelessWidget {
 
                   IconButton(
                       onPressed: () {
-                        Get.snackbar('message !!',
+                        Dialogs.showGetSnackbar('message !!',
                             'you have to be friend with the user to share photo');
                       },
                       icon: const Icon(Icons.image,
@@ -56,7 +59,7 @@ class ChatMessageInput extends StatelessWidget {
 
                   IconButton(
                       onPressed: () {
-                        Get.snackbar('message',
+                        Dialogs.showGetSnackbar('message',
                             'you have to be friend with the user to share photo');
                       },
                       icon: const Icon(Icons.camera_alt_rounded,

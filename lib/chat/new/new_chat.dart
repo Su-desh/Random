@@ -33,49 +33,49 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
           child: Scaffold(
             backgroundColor: const Color.fromARGB(255, 26, 101, 139),
             appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                flexibleSpace: Card(
-                  child: Row(
-                    children: [
-                      //back button
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0, left: 4),
-                        child: ElevatedButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Icon(Icons.arrow_back,
-                                color: Colors.black54)),
+              flexibleSpace: Row(
+                children: [
+                  //back button
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0, left: 4),
+                    child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        Icons.arrow_back,
                       ),
-
-                      //user name & last seen time
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          //user name
-                          // const Text('Random User',
-                          Text(value.connectedWithChatUser.username,
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.w500)),
-
-                          //for adding some space
-                          const SizedBox(height: 2),
-                          //last seen time of user
-                          Text(
-                              value.connectedWithChatUser.is_online
-                                  ? 'Online'
-                                  : MyDateUtil.getLastActiveTime(
-                                      context: context,
-                                      lastActive: value
-                                          .connectedWithChatUser.last_seen),
-                              style: const TextStyle(
-                                  fontSize: 13, color: Colors.black)),
-                        ],
-                      )
-                    ],
+                    ),
                   ),
-                )),
+
+                  //user name & last seen time
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      //user name
+                      // const Text('Random User',
+                      Text(value.connectedWithChatUser.username,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+
+                      //for adding some space
+                      const SizedBox(height: 2),
+                      //last seen time of user
+                      Text(
+                        value.connectedWithChatUser.is_online
+                            ? 'Online'
+                            : MyDateUtil.getLastActiveTime(
+                                context: context,
+                                lastActive:
+                                    value.connectedWithChatUser.last_seen),
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
             body: Column(
               children: [
                 Expanded(
@@ -124,9 +124,9 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
                               child: CircularProgressIndicator(
                                   backgroundColor: Colors.green),
                             )
-                          : Align(
-                              alignment: Alignment.bottomLeft,
-                              child: chatHasEnded()),
+                          : const Align(
+                              alignment: Alignment.bottomCenter,
+                              child: ChatHasEnded()),
                 ),
 
                 //skip and end chat

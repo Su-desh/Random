@@ -67,14 +67,14 @@ class _MessageCardState extends State<MessageCard> {
                         )
                       :
                       //show image
-                       GestureDetector(
+                      GestureDetector(
                           onTap: () {
                             Get.to(ShowImage(imageUrl: widget.message.msg));
                           },
                           child: const Icon(
                             Icons.image,
                             color: Colors.blue,
-                         size: 100,
+                            size: 100,
                           ),
                         ),
                 ),
@@ -157,7 +157,7 @@ class _MessageCardState extends State<MessageCard> {
                           child: const Icon(
                             Icons.image,
                             color: Colors.blue,
-                         size: 100,
+                            size: 100,
                           ),
                         ),
                 ),

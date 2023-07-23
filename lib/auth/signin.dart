@@ -5,6 +5,8 @@ import 'package:random/auth/auth.dart';
 import 'package:random/auth/login.dart';
 import 'package:random/home_page.dart';
 
+import '../helper/dialogs.dart';
+
 /// Sign in page for the new User
 class SignInScreen extends StatefulWidget {
   // ignore: public_member_api_docs
@@ -77,7 +79,10 @@ class _SignInScreenState extends State<SignInScreen> {
         setState(() {
           isPressedSignin = false;
         });
-        Get.snackbar('error !!', message, backgroundColor: Colors.blue);
+        Dialogs.showGetSnackbar(
+          'error !!',
+          message,
+        );
       }
     }
   }

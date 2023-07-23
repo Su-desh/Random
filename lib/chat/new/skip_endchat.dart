@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/chat/new/state_new_user.dart';
+import 'package:random/helper/dialogs.dart';
 import 'package:random/main.dart';
 
 /// blue line widget which will have options to skip end and add friend
@@ -29,8 +30,10 @@ class SkipToNextEndChat extends StatelessWidget {
                     if (newConnect.isConnected) {
                       await value.endThisConnectedChat();
                     } else {
-                      Get.snackbar('error', 'you are not connected !!',
-                          duration: const Duration(seconds: 2));
+                      Dialogs.showGetSnackbar(
+                        'error',
+                        'you are not connected !!',
+                      );
                     }
                   },
                   child: const Text('End This Chat')),
@@ -43,8 +46,10 @@ class SkipToNextEndChat extends StatelessWidget {
                       value.sendMessageOfNewConnect(
                           value.connectedWithChatUser, req);
                     } else {
-                      Get.snackbar('error', 'you are not connected !!',
-                          duration: const Duration(seconds: 2));
+                      Dialogs.showGetSnackbar(
+                        'error',
+                        'you are not connected !!',
+                      );
                     }
                   },
                   child: const Icon(Icons.person_add_alt_rounded))

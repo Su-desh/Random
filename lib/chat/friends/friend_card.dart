@@ -34,9 +34,10 @@ class FriendCard extends StatelessWidget {
                 Get.to(ChattingScreenPage(user: chatWithUser));
               },
               child: Card(
-                  elevation: 40,
-                  color: Colors.blue,
-                  child: Row(children: <Widget>[
+                elevation: 40,
+                color: Colors.blue,
+                child: Row(
+                  children: <Widget>[
                     Expanded(
                         child: Row(
                       children: <Widget>[
@@ -87,7 +88,9 @@ class FriendCard extends StatelessWidget {
                         child: Icon(Icons.more_vert),
                       ),
                     )
-                  ])),
+                  ],
+                ),
+              ),
             );
           }
         },
