@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDNZl7nKUcaH-THoo3HT54OilASFheCKPY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>17134732223</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.random</string>
+	<key>PROJECT_ID</key>
+	<string>random-49876</string>
+	<key>STORAGE_BUCKET</key>
+	<string>random-49876.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:17134732223:ios:a27ec3b9bee73476d5170a</string>
+	<key>DATABASE_URL</key>
+	<string>https://random-49876-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

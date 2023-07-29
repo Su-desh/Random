@@ -1,19 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:random/API/api.dart';
 
+///Class to deal with Auth related Services
 class AuthService {
-  
-  //sign out user
-  Future<void> signOutThisUser() async {
-    await FirebaseAuth.instance.signOut();
+  /// sign out user
+  static Future<void> signOutThisUser() async {
+    await APIs.updateActiveStatus(false);
+    await APIs.firebaseAuth.signOut();
   }
 
-  //register new user
-  Future<String?> registration({
+  /// register new user
+  static Future<String?> registration({
     required String email,
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await APIs.firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -31,13 +33,13 @@ class AuthService {
     }
   }
 
-//login
-  Future<String?> login({
+  /// login
+  static Future<String?> login({
     required String email,
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await APIs.firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -56,17 +58,3 @@ class AuthService {
     }
   }
 }
-
-// var usersReference = firestoreDB.collection('users');
-
-// //create the account for the new user
-//   createTheAccountForNewUser(
-//       {required String username, required String password}) async {
-//     try {
-//       var newAccountVar = await usersReference
-//           .add({'username': username, 'password': password});
-//     } catch (e) {
-//       // ignore: avoid_print
-//       print('this is the catch error $e');
-//     }
-//   }
