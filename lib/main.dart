@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/signin.dart';
 import 'firebase_options.dart';
+import 'notifications/notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +57,8 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    // Initialise  localnotification
+    LocalNotificationService.initialize();
     WidgetsBinding.instance.addObserver(this);
   }
 
