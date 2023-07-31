@@ -57,8 +57,8 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    // Initialise  localnotification
-    LocalNotificationService.initialize();
+    //background isolate for notfication
+    LocalNotificationService.initializeService();
     WidgetsBinding.instance.addObserver(this);
   }
 
