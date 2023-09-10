@@ -25,9 +25,9 @@ class _NewConnectConversationCardState
     return GetBuilder<NewConnect>(
       init: newConnect,
       builder: (value) => GestureDetector(
-        onTap: () async {
+        onTap: () {
           if (newConnect.isConnected == false) {
-            await newConnect.searchNewConnectFunc();
+            newConnect.funcForNewConnect();
           }
           Get.to(const ChatWithNewPerson());
         },

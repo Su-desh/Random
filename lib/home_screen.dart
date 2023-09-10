@@ -28,9 +28,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () async {
+            onPressed: () {
               if (newConnect.isConnected == false) {
-                await newConnect.searchNewConnectFunc();
+                newConnect.funcForNewConnect();
               }
               Get.to(const ChatWithNewPerson());
             },

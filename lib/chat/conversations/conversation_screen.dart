@@ -72,9 +72,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+        onPressed: () {
           if (newConnect.isConnected == false) {
-            await newConnect.searchNewConnectFunc();
+            newConnect.funcForNewConnect();
           }
           Get.to(const ChatWithNewPerson());
         },
