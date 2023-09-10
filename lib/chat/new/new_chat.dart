@@ -52,9 +52,9 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       //user name
-                      // const Text('Random User',
-                      Text(value.connectedWithChatUser.username,
-                          style: const TextStyle(
+                      const Text('Anonymous',
+                          // Text(value.connectedWithChatUser.username,
+                          style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500)),
 
                       //for adding some space
