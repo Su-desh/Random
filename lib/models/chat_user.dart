@@ -6,6 +6,7 @@ class ChatUser {
       required this.friends_list,
       required this.is_online,
       required this.is_searching_new,
+      required this.i_am_connected_to,
       required this.created_at,
       required this.last_seen,
       required this.user_UID,
@@ -24,6 +25,9 @@ class ChatUser {
 
   /// whether the user is searching for new user to chat with
   late bool is_searching_new;
+
+  /// with whom i am connected with
+  late String i_am_connected_to;
 
   /// when this user account was created
   late String created_at;
@@ -49,6 +53,7 @@ class ChatUser {
     friends_list = json['friends_list'] ?? [];
     is_online = json['is_online'] ?? true;
     is_searching_new = json['is_searching_new'] ?? false;
+    i_am_connected_to = json['i_am_connected_to'] ?? '';
     created_at = json['created_at'] ?? '';
     last_seen = json['last_seen'] ?? '';
     user_UID = json['user_UID'] ?? '';
@@ -64,6 +69,7 @@ class ChatUser {
     data['friends_list'] = friends_list;
     data['is_online'] = is_online;
     data['is_searching_new'] = is_searching_new;
+    data['i_am_connected_to'] = i_am_connected_to;
     data['created_at'] = created_at;
     data['last_seen'] = last_seen;
     data['user_UID'] = user_UID;

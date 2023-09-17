@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/conversations/state_conversation.dart';
@@ -16,8 +17,8 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //prevent user from taking screenshot
-  //! i will uncomment this at production, it is giving error for web build
-  //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  // ! i will uncomment this at production, it is giving error for web build
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   sharedPreferences = await SharedPreferences.getInstance();

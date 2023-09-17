@@ -27,17 +27,33 @@ class NewConnect extends GetxController {
     username: '',
   );
 
-  /// This function is used for searching the new user to chat with
-  Future<void> searchNewConnectFunc() async {
+  /// This function is used for deciding wheather to find new connect
+  /// or wait for it(other side user will connect with us)
+  void funcForNewConnect() {
+    int randomNum = Random().nextInt(2);
+    if (randomNum == 0) {
+      print("i am trying ggggggggggggggggggggggggg $randomNum");
+
+      iAmTryingToFindNewUser();
+    } else {
+      print("i am waitinggggggggggggggggggggggggg $randomNum");
+
+      iAmWaitingForNewConnect();
+    }
+  }
+
+  /// i am trying to connect with new user
+  Future<void> iAmTryingToFindNewUser() async {
     if (isConnected) {
       await endThisConnectedChat();
     }
     showProgressIndicator = true;
     update();
     // set this user searching true
-    updateSearchingField(true);
+    await updateSearchingField(true);
+
 //search another user
-    APIs.firestoreDB
+    await APIs.firestoreDB
         .collection("users")
         .where('user_UID',
             isNotEqualTo: APIs.me
@@ -58,12 +74,78 @@ class NewConnect extends GetxController {
           isConnected = true;
           //now user is connected with someone
           updateSearchingField(false);
+          //i_am_connected_to = 'connected user id'
+          updateIamConnectedToField(connectedWithChatUser.user_UID);
+          //update thier field and add my id to thier field
+          updateTheirIamConnectedToField(connectedWithChatUser.user_UID);
           showProgressIndicator = false;
           update();
         }
       },
       onError: (e) => print("Error completing: $e"),
     );
+  }
+
+  ///current user document reference
+  var currentUserDocRef =
+      APIs.firestoreDB.collection('users').doc(APIs.user.uid).snapshots();
+
+  /// i am waiting for someone to update my i_am_connected_to filed to connected with them
+  Future<void> iAmWaitingForNewConnect() async {
+    if (isConnected) {
+      await endThisConnectedChat();
+    }
+    showProgressIndicator = true;
+    update();
+    // set this user searching true
+    await updateSearchingField(true);
+
+// listen to changes in i_am_connected_to field so that i can update my UI(for new connect)
+    currentUserDocRef.listen(
+      (event) {
+        Map<String, dynamic> data = event.data() as Map<String, dynamic>;
+        if (data['i_am_connected_to'] != '') {
+          //update my UI when the other person disconnected the chat with me
+          isConnected = false;
+          update();
+        }
+        //if i am connected to some user then update UI about that in order to chat with them
+        else if (data['i_am_connected_to'] != '') {
+          String connected_to_Id = data['i_am_connected_to'];
+          APIs.firestoreDB.collection('users').doc(connected_to_Id).get().then(
+            (DocumentSnapshot document) {
+              Map<String, dynamic> connecterUserData =
+                  document.data() as Map<String, dynamic>;
+              //connected user info to chat with
+              connectedWithChatUser =
+                  NewConnectedChatUser.fromJson(connecterUserData);
+            },
+          );
+        }
+      },
+    );
+    isConnected = true;
+    //now user is connected with someone
+    updateSearchingField(false);
+    //i_am_connected_to = 'connected user id'
+    updateIamConnectedToField(connectedWithChatUser.user_UID);
+    showProgressIndicator = false;
+    update();
+  }
+
+  /// update i_am_connected_to field
+  static Future<void> updateIamConnectedToField(String connectedToId) async {
+    APIs.firestoreDB.collection('users').doc(APIs.user.uid).update({
+      'i_am_connected_to': connectedToId,
+    });
+  }
+
+  /// update my id to thier i_am_connected_to filed so that they can connect with me
+  static Future<void> updateTheirIamConnectedToField(
+      String connectedToId) async {
+    APIs.firestoreDB.collection('users').doc(connectedToId).update({
+      'i_am_connected_to': APIs.user.uid,
+    });
   }
 
   /// update searching field bool
@@ -77,25 +159,18 @@ class NewConnect extends GetxController {
   Future<void> endThisConnectedChat() async {
     //remove the last message details
     last_message = null;
-    //delete the last msg related data
-    await APIs.firestoreDB
-        .collection('temp')
-        .doc(APIs.getConversationID(connectedWithChatUser.user_UID))
-        .update({
-      'fromId': FieldValue.delete(),
-      'msg': FieldValue.delete(),
-      'read': FieldValue.delete(),
-      'sent': FieldValue.delete(),
-      'toId': FieldValue.delete(),
-      'type': FieldValue.delete(),
-    });
+    //delete i_am_connected_to for me and the other side too
+
+    //make my i_am_connected_to field empty
+    await updateIamConnectedToField('');
+    //update thier field so that thier UI show that the chat has ended
+    await updateTheirIamConnectedToField('');
 
     //delete the temp chats
-    await APIs.firestoreDB
-        .collection(
-            'temp/${APIs.getConversationID(connectedWithChatUser.user_UID)}/messages/')
-        .get()
-        .then(
+    String tempMsgPath =
+        'temp/${APIs.getConversationID(connectedWithChatUser.user_UID)}/messages/';
+
+    await APIs.firestoreDB.collection(tempMsgPath).get().then(
       (snapshot) {
         for (DocumentSnapshot ds in snapshot.docs) {
           ds.reference.delete();
@@ -103,7 +178,6 @@ class NewConnect extends GetxController {
         }
       },
     );
-
     isConnected = false;
     update();
   }
@@ -131,7 +205,23 @@ class NewConnect extends GetxController {
     final docRef = APIs.firestoreDB
         .collection('temp')
         .doc(APIs.getConversationID(chatUser.user_UID));
-    await docRef.set(message.toJson());
+
+    //idea is to compare both and keep the small id first,
+    //so that unnecssary write can be reduced
+    //this list will help in fetching the conversation (since the 'where' was not suitable for 2-sided)
+    int res = APIs.me.user_UID.compareTo(chatUser.user_UID);
+    List toFrom = [];
+    List userNames = [];
+    if (res < 0) {
+      //me.user_UID smaller
+      toFrom = [APIs.me.user_UID, chatUser.user_UID];
+      userNames = [APIs.me.username, chatUser.username];
+    } else {
+      // chatuser.UId smaller
+      toFrom = [chatUser.user_UID, APIs.me.user_UID];
+      userNames = [chatUser.username, APIs.me.username];
+    }
+    await docRef.set({'userNames': userNames, 'ToFrom': toFrom});
   }
 
   /// for getting all messages of a specific conversation from firestore database

@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:random/chat/friends/chatting_screen.dart';
+import 'package:random/main.dart';
 
 import '../../API/api.dart';
+import '../../models/chat_user.dart';
 
 /// Sending friend request
 class FriendRequest extends StatelessWidget {
@@ -10,6 +14,33 @@ class FriendRequest extends StatelessWidget {
 
   ///who sent request
   final bool canIadd;
+
+  /// add the other person to friend list
+  Future<void> addThisToFriendList() async {
+    String thierId = newConnect.connectedWithChatUser.user_UID;
+    await APIs.firestoreDB.collection('users').doc(APIs.user.uid).update({
+      'friends_list': FieldValue.arrayUnion([thierId]),
+    });
+
+    await APIs.firestoreDB.collection('users').doc(thierId).get().then(
+      (DocumentSnapshot document) {
+        Map<String, dynamic> connecterUserData =
+            document.data() as Map<String, dynamic>;
+        //new friend info(Add Friend)
+        ChatUser chatWithNewFriendData = ChatUser.fromJson(connecterUserData);
+        //open the chatting page
+        //!this will open the chat only on our side not the other side(to whom we chatting with)
+        //!need to open the Chatting screen in thier screen too (I will solve this)
+        ChattingScreenPage(
+          user: chatWithNewFriendData,
+        );
+      },
+    );
+
+    //after opening the chatting screen with new friend
+    //the app needs to delete the Anonymous chat with this person(New Friend)
+    await newConnect.endThisConnectedChat();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +65,9 @@ class FriendRequest extends StatelessWidget {
                   onPressed: canIadd
                       ?
                       //code to add the user to friend list
-                      () {}
+                      () async {
+                          await addThisToFriendList();
+                        }
                       : null,
                   child: const Text(
                     'Add Friend',

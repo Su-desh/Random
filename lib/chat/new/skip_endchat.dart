@@ -20,8 +20,8 @@ class SkipToNextEndChat extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
-                onPressed: () async {
-                  await value.searchNewConnectFunc();
+                onPressed: () {
+                  value.funcForNewConnect();
                 },
                 child: const Text('Skip To Next')),
             if (value.isConnected)
