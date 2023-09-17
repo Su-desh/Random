@@ -81,8 +81,7 @@ class _ChatWithNewPersonState extends State<ChatWithNewPerson> {
                 Expanded(
                   child: value.isConnected
                       ? StreamBuilder(
-                          stream: value.getAllMessagesOfNewConnect(
-                              newConnect.connectedWithChatUser),
+                          stream: value.getAllMessagesOfNewConnect(),
                           builder: (context, snapshot) {
                             switch (snapshot.connectionState) {
                               //if data is loading

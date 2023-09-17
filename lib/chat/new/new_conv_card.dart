@@ -51,8 +51,7 @@ class _NewConnectConversationCardState
             : Container(
                 padding: const EdgeInsets.only(left: 10, right: 5),
                 child: StreamBuilder(
-                  stream: newConnect.getLastMessageOfNewConnect(
-                      newConnect.connectedWithChatUser),
+                  stream: newConnect.getLastMessageOfNewConnect(),
                   builder: (context, snapshot) {
                     final data = snapshot.data?.docs;
                     final list =

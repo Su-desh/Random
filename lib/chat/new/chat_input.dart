@@ -79,8 +79,7 @@ class ChatMessageInput extends StatelessWidget {
             builder: (val) => MaterialButton(
               onPressed: () {
                 if (val.isConnected && textController.text.isNotEmpty) {
-                  val.sendMessageOfNewConnect(
-                      val.connectedWithChatUser, textController.text);
+                  val.sendMessageOfNewConnect(textController.text);
                   textController.text = '';
                 }
               },

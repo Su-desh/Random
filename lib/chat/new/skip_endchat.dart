@@ -26,9 +26,9 @@ class SkipToNextEndChat extends StatelessWidget {
                 child: const Text('Skip To Next')),
             if (value.isConnected)
               ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () {
                     if (newConnect.isConnected) {
-                      await value.endThisConnectedChat();
+                      value.endThisConnectedChat();
                     } else {
                       Dialogs.showGetSnackbar(
                         'error',
@@ -43,8 +43,7 @@ class SkipToNextEndChat extends StatelessWidget {
                     if (value.isConnected) {
                       //send friend request
                       String req = '[FRIEND_REQUEST]';
-                      value.sendMessageOfNewConnect(
-                          value.connectedWithChatUser, req);
+                      value.sendMessageOfNewConnect(req);
                     } else {
                       Dialogs.showGetSnackbar(
                         'error',
