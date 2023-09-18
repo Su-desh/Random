@@ -1,8 +1,12 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:random/auth/auth.dart';
 import 'package:random/auth/signin.dart';
+import 'package:random/general/privacy_policy.dart';
+import 'package:random/helper/dialogs.dart';
+import 'package:random/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:store_redirect/store_redirect.dart';
 
@@ -75,7 +79,17 @@ class SideDrawer extends StatelessWidget {
                 )
               ]),
               GestureDetector(
-                onTap: () {},
+                onTap: () async {
+                  Get.back();
+                  var connection = await netConnectivity.checkConnectivity();
+                  if (connection == ConnectivityResult.mobile ||
+                      connection == ConnectivityResult.wifi) {
+                    Get.to(PrivacyPolicy());
+                  } else {
+                    print('not conected to any network ');
+                    Dialogs.netWorkAlert();
+                  }
+                },
                 child: const Padding(
                   padding: EdgeInsets.only(left: 10, top: 20),
                   child: Row(
@@ -88,13 +102,26 @@ class SideDrawer extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  AuthService.signOutThisUser();
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (context) => const SignInScreen()),
-                  );
-                  print('current user ${APIs.me.username} sign out done !!!');
+                onTap: () async {
+                  var connection = await netConnectivity.checkConnectivity();
+                  if (connection == ConnectivityResult.mobile ||
+                      connection == ConnectivityResult.wifi) {
+                    await AuthService.signOutThisUser();
+                    Get.back();
+                    print('current user ${APIs.me.username} sign out done !!!');
+                    //go to signin page after signout because the conversation page
+                    //will show error while the dialog box is displayed in foreground
+                    //becoz the data is not loaded after signout
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const SignInScreen()));
+                    //show restart dialog
+                    Dialogs.restartAppDialog();
+                  } else {
+                    print('not connected to network');
+                    Get.back();
+                    Dialogs.netWorkAlert();
+                  }
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(left: 10, top: 20),

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +42,9 @@ final friendClass = FriendState();
 
 ///instance of conversation class
 final conversationClass = ConversationState();
+
+///connectivity
+final netConnectivity = Connectivity();
 
 ///theme
 final themeNotifier = ThemeNotifier();

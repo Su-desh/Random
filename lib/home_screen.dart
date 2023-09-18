@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:random/chat/new/new_chat.dart';
-import 'package:random/main.dart';
+import 'package:random/helper/dialogs.dart';
 
 /// widget to show home Screen of the app
 class HomeScreen extends StatelessWidget {
@@ -14,14 +12,14 @@ class HomeScreen extends StatelessWidget {
       color: Colors.transparent,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 5, right: 5),
+          const Padding(
+            padding: EdgeInsets.only(top: 15.0, left: 5.0, right: 5.0),
             child: Card(
-              color: Colors.blue[200],
-              child: const Padding(
+              color: Colors.blue,
+              child: Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
-                  'Hi, click on the Random button below to connect with a completely random stranger, you can chat with them and make new friends here',
+                  'Hi, click on the Random Search button below to connect with a completely random stranger, you can chat with them and make new friends here .',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -29,10 +27,7 @@ class HomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              if (newConnect.isConnected == false) {
-                newConnect.funcForNewConnect();
-              }
-              Get.to(const ChatWithNewPerson());
+              Dialogs.connectWithStranger();
             },
             child: const Text(
               'Random Search',

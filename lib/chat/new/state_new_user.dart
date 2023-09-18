@@ -233,7 +233,6 @@ class NewConnect extends GetxController {
       userNames = [connectedWithChatUser.username, APIs.me.username];
     }
     //only create a new doc in temp when the user is connected to someone
-
     if (connectedWithChatUser.user_UID != '') {
       await docRef.set({'userNames': userNames, 'ToFrom': toFrom});
     }

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:random/chat/new/new_chat.dart';
 import 'package:random/chat/new/state_new_user.dart';
+import 'package:random/helper/dialogs.dart';
 import 'package:random/main.dart';
 
 import '../../API/api.dart';
@@ -26,10 +26,7 @@ class _NewConnectConversationCardState
       init: newConnect,
       builder: (value) => GestureDetector(
         onTap: () {
-          if (newConnect.isConnected == false) {
-            newConnect.funcForNewConnect();
-          }
-          Get.to(const ChatWithNewPerson());
+          Dialogs.connectWithStranger();
         },
         child: !newConnect.isConnected
             ? const Padding(

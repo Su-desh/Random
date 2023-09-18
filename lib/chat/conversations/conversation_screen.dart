@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/conversations/conversation_card.dart';
 import 'package:random/chat/new/new_conv_card.dart';
+import 'package:random/helper/dialogs.dart';
 
 import '../../main.dart';
-import '../new/new_chat.dart';
 
 /// Widget to show the list of all Conversations
 class ConversationScreen extends StatefulWidget {
@@ -73,10 +72,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (newConnect.isConnected == false) {
-            newConnect.funcForNewConnect();
-          }
-          Get.to(const ChatWithNewPerson());
+          Dialogs.connectWithStranger();
         },
         child: const Icon(Icons.add),
       ),

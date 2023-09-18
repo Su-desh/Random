@@ -17,9 +17,11 @@ dependencies:
   firebase_auth: ^4.6.2
   firebase_core: ^2.13.0
   store_redirect: ^2.0.1
+  webview_flutter: ^4.2.4
   cloud_firestore: ^4.7.1
   cupertino_icons: ^1.0.2
   firebase_storage: ^11.2.2
+  connectivity_plus: ^4.0.2
   shared_preferences: ^2.1.2
   emoji_picker_flutter: ^1.6.1
   cached_network_image: ^3.2.3
