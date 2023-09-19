@@ -25,10 +25,7 @@ dependencies:
   shared_preferences: ^2.1.2
   emoji_picker_flutter: ^1.6.1
   cached_network_image: ^3.2.3
-  flutter_windowmanager: ^0.2.0
   curved_navigation_bar: ^1.0.3
-  #flutter_background_service: ^5.0.1
-  #flutter_local_notifications: ^15.1.0+1
 
 
 dev_dependencies:
