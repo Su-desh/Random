@@ -7,6 +7,7 @@ import 'package:random/home_screen.dart';
 import 'package:random/chat/friends/friends_screen.dart';
 import 'package:random/general/side_drawer.dart';
 import 'package:random/main.dart';
+import 'package:random/memes/memes_page.dart';
 
 import 'general/theme.dart';
 
@@ -20,8 +21,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _index = 0;
+  int _index = 1;
   List<Widget> pages = const [
+    MemesPage(),
     HomeScreen(),
     ConversationScreen(),
     PeopleScreen()
@@ -67,11 +69,13 @@ class _HomePageState extends State<HomePage> {
                 ]),
             body: IndexedStack(index: _index, children: pages),
             bottomNavigationBar: CurvedNavigationBar(
+              index: 1,
               backgroundColor: Colors.deepPurple,
               color: value.lightMode! ? Colors.white : Colors.black87,
               height: 50,
               animationDuration: const Duration(milliseconds: 300),
               items: const <Widget>[
+                Icon(Icons.image, size: 25),
                 Icon(Icons.home, size: 25),
                 Icon(Icons.message, size: 25),
                 Icon(Icons.group, size: 25),

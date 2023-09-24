@@ -9,6 +9,7 @@ import 'package:random/chat/friends/state_friend.dart';
 import 'package:random/chat/new/state_new_user.dart';
 import 'package:random/general/theme.dart';
 import 'package:random/home_page.dart';
+import 'package:random/memes/meme_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/signin.dart';
@@ -44,6 +45,9 @@ final conversationClass = ConversationState();
 
 ///connectivity
 final netConnectivity = Connectivity();
+
+/// instance of Friend Class
+final memeState = MemeState();
 
 ///theme
 final themeNotifier = ThemeNotifier();
