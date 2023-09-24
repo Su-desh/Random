@@ -115,6 +115,11 @@ class _SignInScreenState extends State<SignInScreen> {
                           TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
                     ),
                     const SizedBox(height: 20),
+                    const Text(
+                      "We care for your privacy, so feel free to use any random username. You don't need to give us your real name.",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    const SizedBox(height: 20),
                     TextFormField(
                       //Assign controller
                       controller: _usernameController,
