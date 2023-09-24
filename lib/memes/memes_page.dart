@@ -15,7 +15,19 @@ class MemesPage extends StatefulWidget {
 class _MemesPageState extends State<MemesPage> {
   @override
   void initState() {
+    memeState.memeScrollController.addListener(() {
+      if (memeState.memeScrollController.offset >=
+          memeState.memeScrollController.position.maxScrollExtent) {
+        memeState.loadMemeFunc(howMany: 5);
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    memeState.memeScrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -26,13 +38,6 @@ class _MemesPageState extends State<MemesPage> {
         controller: value.memeScrollController,
         itemCount: value.memeUrls.length,
         itemBuilder: (BuildContext context, int index) {
-          //load more memes when reached the bottom of the meme listview
-          value.memeScrollController.addListener(() {
-            if (value.memeScrollController.offset >=
-                value.memeScrollController.position.maxScrollExtent) {
-              value.loadMemeFunc(howMany: 5);
-            }
-          });
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: Card(
