@@ -8,6 +8,7 @@ import 'package:random/chat/friends/friends_screen.dart';
 import 'package:random/general/side_drawer.dart';
 import 'package:random/main.dart';
 import 'package:random/memes/memes_page.dart';
+import 'package:random/rooms/room_page.dart';
 
 import 'general/theme.dart';
 
@@ -22,10 +23,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _index = 1;
+
+  //list of all pages widget
   List<Widget> pages = const [
     MemesPage(),
     HomeScreen(),
     ConversationScreen(),
+    RoomPage(),
     PeopleScreen()
   ];
 
@@ -75,9 +79,10 @@ class _HomePageState extends State<HomePage> {
               height: 50,
               animationDuration: const Duration(milliseconds: 300),
               items: const <Widget>[
-                Icon(Icons.image, size: 25),
+                Icon(Icons.local_fire_department, size: 25),
                 Icon(Icons.home, size: 25),
-                Icon(Icons.message, size: 25),
+                Icon(Icons.chat, size: 25),
+                Icon(Icons.groups, size: 25),
                 Icon(Icons.group, size: 25),
               ],
               onTap: (int index) {
