@@ -24,7 +24,7 @@
 //       memeNum++;
 //       await uploadMeme(
 //         file: File(i.path),
-//         //!check this properly before upload
+//         //!check this properly before upload uploade 5 sets
 //         setNum: ,
 //         memeNum: memeNum,
 //       );
