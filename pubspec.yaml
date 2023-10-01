@@ -11,21 +11,44 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # State management
   get: ^4.6.5
-  share_plus: ^7.0.2
+
+  #storage 
+  saf: ^1.0.3+4
+  
+  # Networking
+  dio: ^5.3.3
+
+  # File management
   image_picker: ^1.0.0
+
+  # Sharing files
+  share_plus: ^7.0.2
+
+  # Web browsing(privacy policy)
+  webview_flutter: ^4.2.4
+
+  # User interface
+  cupertino_icons: ^1.0.2
+  curved_navigation_bar: ^1.0.3
+
+
+  # Firebase services
   firebase_auth: ^4.6.2
   firebase_core: ^2.13.0
-  store_redirect: ^2.0.1
-  webview_flutter: ^4.2.4
-  cloud_firestore: ^4.7.1
-  cupertino_icons: ^1.0.2
   firebase_storage: ^11.2.2
+  cloud_firestore: ^4.7.1
+
+  # Other
+  store_redirect: ^2.0.1
   connectivity_plus: ^4.0.2
   shared_preferences: ^2.1.2
+  path_provider: ^2.1.1
   emoji_picker_flutter: ^1.6.1
   cached_network_image: ^3.2.3
-  curved_navigation_bar: ^1.0.3
+
 
 
 dev_dependencies:
@@ -35,3 +58,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+  - assets/

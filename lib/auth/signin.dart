@@ -93,7 +93,13 @@ class _SignInScreenState extends State<SignInScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         body: SingleChildScrollView(
-          child: SizedBox(
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/nature.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
             height: Get.height,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
