@@ -46,7 +46,7 @@ final conversationClass = ConversationState();
 ///connectivity
 final netConnectivity = Connectivity();
 
-/// instance of Friend Class
+/// instance of memes Class
 final memeState = MemeState();
 
 ///theme

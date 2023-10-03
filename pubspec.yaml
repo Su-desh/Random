@@ -3,7 +3,7 @@ description: A random connect project.
 
 publish_to: 'none'
 
-version: 0.3.0+4
+version: 0.3.1+5
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -16,7 +16,7 @@ dependencies:
   get: ^4.6.5
 
   #storage 
-  saf: ^1.0.3+4
+  flutter_file_dialog: ^3.0.2
   
   # Networking
   dio: ^5.3.3
