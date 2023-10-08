@@ -37,7 +37,7 @@ class MemeState extends GetxController {
   /// function to load memes
   Future<void> loadMemeFunc({required int howMany}) async {
     for (int i = 0; i <= howMany; i++) {
-      int randomSet = Random().nextInt(6) + 1; //! set-1 to set-5
+      int randomSet = Random().nextInt(8) + 1; //! set-1 to set-7
       int randomMemeNumber = Random().nextInt(101) + 1; //imge-1 to image-100
 
       try {
