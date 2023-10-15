@@ -24,8 +24,8 @@
 //       memeNum++;
 //       await uploadMeme(
 //         file: File(i.path),
-//         //!check this properly before upload 
-//         setNum: ,
+//         //!check this properly before upload
+//         setNum: ,//! last was 9
 //         memeNum: memeNum,
 //       );
 //       print('$i this meme is uploaded to firebase');

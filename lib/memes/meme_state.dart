@@ -23,7 +23,7 @@ class MemeState extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadMemeFunc(howMany: 30);
+    loadMemeFunc(howMany: 50);
 
     memeScrollController.addListener(() {
       if (memeScrollController.position.maxScrollExtent ==
@@ -37,7 +37,7 @@ class MemeState extends GetxController {
   /// function to load memes
   Future<void> loadMemeFunc({required int howMany}) async {
     for (int i = 0; i <= howMany; i++) {
-      int randomSet = Random().nextInt(8) + 1; //! set-1 to set-7
+      int randomSet = Random().nextInt(10) + 1; //! set-1 to set-9
       int randomMemeNumber = Random().nextInt(101) + 1; //imge-1 to image-100
 
       try {
