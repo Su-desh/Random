@@ -1,7 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:random/auth/auth.dart';
 import 'package:random/auth/signin.dart';
 import 'package:random/general/privacy_policy.dart';
@@ -26,29 +25,32 @@ class SideDrawer extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                        Colors.deepPurple,
-                        CupertinoColors.activeBlue
-                      ])),
-                  width: Get.width * 1,
-                  height: Get.height * 0.10,
-                  child: Center(
-                      child: Text(APIs.me.username,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)))),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [Colors.deepPurple, CupertinoColors.activeBlue],
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width * 1,
+                height: MediaQuery.of(context).size.height * 0.10,
+                child: Center(
+                  child: Text(
+                    APIs.me.username,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
               const Divider(
                 thickness: 1,
               ),
               Column(children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    Navigator.pop(context);
                     Share.share(
                         'Click on the below link to chat with Random people and make new friends.  https://play.google.com/store/apps/details?id=com.Ampereflow.chat ');
                   },
@@ -57,14 +59,17 @@ class SideDrawer extends StatelessWidget {
                     child: Row(
                       children: [
                         Icon(Icons.share),
-                        Text('    Share', style: TextStyle(fontSize: 18))
+                        Text(
+                          '    Share',
+                          style: TextStyle(fontSize: 18),
+                        )
                       ],
                     ),
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    Navigator.pop(context);
                     StoreRedirect.redirect(androidAppId: 'com.Ampereflow.chat');
                   },
                   child: const Padding(
@@ -72,7 +77,10 @@ class SideDrawer extends StatelessWidget {
                     child: Row(
                       children: [
                         Icon(Icons.star),
-                        Text('    Rate', style: TextStyle(fontSize: 18))
+                        Text(
+                          '    Rate',
+                          style: TextStyle(fontSize: 18),
+                        )
                       ],
                     ),
                   ),
@@ -80,14 +88,17 @@ class SideDrawer extends StatelessWidget {
               ]),
               GestureDetector(
                 onTap: () async {
-                  Get.back();
+                  Navigator.pop(context);
                   var connection = await netConnectivity.checkConnectivity();
                   if (connection == ConnectivityResult.mobile ||
                       connection == ConnectivityResult.wifi) {
-                    Get.to(PrivacyPolicy());
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PrivacyPolicy();
+                    }));
                   } else {
                     print('not conected to any network ');
-                    Dialogs.netWorkAlert();
+                    Dialogs.showNetworkAlertDialog(context);
                   }
                 },
                 child: const Padding(
@@ -107,7 +118,7 @@ class SideDrawer extends StatelessWidget {
                   if (connection == ConnectivityResult.mobile ||
                       connection == ConnectivityResult.wifi) {
                     await AuthService.signOutThisUser();
-                    Get.back();
+                    Navigator.pop(context);
                     print('current user ${APIs.me.username} sign out done !!!');
                     //go to signin page after signout because the conversation page
                     //will show error while the dialog box is displayed in foreground
@@ -116,11 +127,11 @@ class SideDrawer extends StatelessWidget {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const SignInScreen()));
                     //show restart dialog
-                    Dialogs.restartAppDialog();
+                    Dialogs.showRestartAppDialog(context);
                   } else {
                     print('not connected to network');
-                    Get.back();
-                    Dialogs.netWorkAlert();
+                    Navigator.pop(context);
+                    Dialogs.showNetworkAlertDialog(context);
                   }
                 },
                 child: const Padding(

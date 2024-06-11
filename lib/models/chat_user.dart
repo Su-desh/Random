@@ -1,6 +1,5 @@
 /// User model for the required user
 class ChatUser {
-  // ignore: public_member_api_docs
   ChatUser(
       {required this.blocked_list,
       required this.friends_list,

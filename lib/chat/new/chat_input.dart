@@ -1,8 +1,7 @@
 // bottom chat input field
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:random/chat/new/state_new_user.dart';
-import 'package:random/main.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:random/chat/new/cubit/new_user_cubit.dart';
 
 import '../../helper/dialogs.dart';
 
@@ -16,9 +15,12 @@ class ChatMessageInput extends StatelessWidget {
     //for handling message text changes
     final textController = TextEditingController();
 
+    final newUserCubit = context.watch<NewUserCubit>();
+
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: Get.height * 0.01, horizontal: Get.width * 0.025),
+          vertical: MediaQuery.of(context).size.height * 0.01,
+          horizontal: MediaQuery.of(context).size.width * 0.025),
       child: Row(
         children: [
           //input field & buttons
@@ -31,7 +33,7 @@ class ChatMessageInput extends StatelessWidget {
                   //emoji button
                   IconButton(
                       onPressed: () {
-                        Dialogs.showGetSnackbar('emoji !!',
+                        Dialogs.showSnackbar(context,
                             'add them to your firend list to send emoji');
                       },
                       icon: const Icon(Icons.emoji_emotions,
@@ -51,7 +53,7 @@ class ChatMessageInput extends StatelessWidget {
 
                   IconButton(
                       onPressed: () {
-                        Dialogs.showGetSnackbar('message !!',
+                        Dialogs.showSnackbar(context,
                             'you have to be friend with the user to share photo');
                       },
                       icon: const Icon(Icons.image,
@@ -59,37 +61,33 @@ class ChatMessageInput extends StatelessWidget {
 
                   IconButton(
                       onPressed: () {
-                        Dialogs.showGetSnackbar('message',
+                        Dialogs.showSnackbar(context,
                             'you have to be friend with the user to share photo');
                       },
                       icon: const Icon(Icons.camera_alt_rounded,
                           color: Colors.blueAccent, size: 26)),
 
                   //adding some space
-                  SizedBox(width: Get.width * 0.02),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                 ],
               ),
             ),
           ),
 
           //send message button
-          GetBuilder<NewConnect>(
-            init: newConnect,
-            // You can initialize your controller here the first time. Don't use init in your other GetBuilders of same controller
-            builder: (val) => MaterialButton(
-              onPressed: () {
-                if (val.isConnected && textController.text.isNotEmpty) {
-                  val.sendMessageOfNewConnect(textController.text);
-                  textController.text = '';
-                }
-              },
-              minWidth: 0,
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 10, right: 5, left: 10),
-              shape: const CircleBorder(),
-              color: val.isConnected ? Colors.green : Colors.red,
-              child: const Icon(Icons.send, color: Colors.white, size: 30),
-            ),
+          MaterialButton(
+            onPressed: () {
+              if (newUserCubit.isConnected && textController.text.isNotEmpty) {
+                newUserCubit.sendMessageOfNewConnect(textController.text);
+                textController.text = '';
+              }
+            },
+            minWidth: 0,
+            padding:
+                const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
+            shape: const CircleBorder(),
+            color: newUserCubit.isConnected ? Colors.green : Colors.red,
+            child: const Icon(Icons.send, color: Colors.white, size: 30),
           ),
         ],
       ),

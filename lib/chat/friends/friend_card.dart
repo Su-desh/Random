@@ -1,7 +1,4 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/friends/chatting_screen.dart';
 import 'package:random/models/chat_user.dart';
@@ -31,7 +28,9 @@ class FriendCard extends StatelessWidget {
 
             return GestureDetector(
               onTap: () {
-                Get.to(ChattingScreenPage(user: chatWithUser));
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ChattingScreenPage(user: chatWithUser);
+                }));
               },
               child: Card(
                 elevation: 40,

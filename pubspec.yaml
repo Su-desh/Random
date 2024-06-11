@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   # State management
-  get: ^4.6.5
+  flutter_bloc: ^8.1.5
 
   #storage 
   flutter_file_dialog: ^3.0.2
@@ -36,10 +36,10 @@ dependencies:
 
 
   # Firebase services
-  firebase_auth: ^4.6.2
-  firebase_core: ^2.13.0
-  firebase_storage: ^11.2.2
-  cloud_firestore: ^4.7.1
+  firebase_auth: ^4.19.1
+  firebase_core: ^2.29.0
+  firebase_storage: ^11.7.1
+  cloud_firestore: ^4.16.1
 
   # Other
   store_redirect: ^2.0.1
@@ -47,14 +47,14 @@ dependencies:
   shared_preferences: ^2.1.2
   path_provider: ^2.1.1
   emoji_picker_flutter: ^1.6.1
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.1
 
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.2
 
 flutter:
   uses-material-design: true

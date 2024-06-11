@@ -3,10 +3,7 @@ import 'package:random/rooms/room_apis.dart';
 
 ///bottom sheet to create new room
 class RoomCreateBottomSheet extends StatelessWidget {
-  ///
-  const RoomCreateBottomSheet({
-    Key? key,
-  }) : super(key: key);
+  const RoomCreateBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

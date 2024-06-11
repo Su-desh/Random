@@ -1,9 +1,7 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random/API/api.dart';
-import 'package:random/main.dart';
+import 'package:random/chat/conversations/cubit/conversation_cubit.dart';
 
 import '../../helper/my_date_util.dart';
 import '../../models/chat_user.dart';
@@ -51,14 +49,21 @@ class _ConversationCardState extends State<ConversationCard> {
       onTap: () async {
         _chatUser == null ? await getChatUser() : null;
 
-        Get.to(ChattingScreenPage(
-          user: _chatUser!,
-        ));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ChattingScreenPage(
+                user: _chatUser!,
+              );
+            },
+          ),
+        );
       },
       child: Container(
         padding: const EdgeInsets.only(left: 10, right: 5),
         child: StreamBuilder(
-          stream: conversationClass.getLastMessage(widget.toUID),
+          stream: context.read<ConversationCubit>().getLastMessage(widget.toUID),
           builder: (context, snapshot) {
             final data = snapshot.data?.docs;
             final list =

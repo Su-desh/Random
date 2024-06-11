@@ -1,11 +1,14 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../API/api.dart';
+import '../../../API/api.dart';
 
-class ConversationState extends GetxController {
+part 'state_conversation.dart';
+
+class ConversationCubit extends Cubit<ConversationInitial> {
+  ConversationCubit() : super(ConversationInitial());
+
 //snapshot of all Conversations of this user
   final convSnap = APIs.firestoreDB
       .collection('chats')

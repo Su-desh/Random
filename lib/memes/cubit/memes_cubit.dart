@@ -3,14 +3,17 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:random/API/api.dart';
 import 'package:share_plus/share_plus.dart';
 
-///class to manage the state of the meme page
-class MemeState extends GetxController {
+part 'memes_state.dart';
+
+class MemesCubit extends Cubit<MemesInitial> {
+  MemesCubit() : super(MemesInitial());
+
   ///scroll Controller
   final ScrollController memeScrollController = ScrollController();
 
@@ -20,9 +23,8 @@ class MemeState extends GetxController {
   ///list of Meme Urls
   List<String> memeUrls = [];
 
-  @override
-  void onInit() {
-    super.onInit();
+//!need to find a way to call this func
+  void memesCubitInit() {
     loadMemeFunc(howMany: 50);
 
     memeScrollController.addListener(() {
@@ -49,7 +51,8 @@ class MemeState extends GetxController {
         if (!memeUrls.contains(memeRef)) {
           // Add the element to the list only when it is not present already.
           memeUrls.add(memeRef);
-          update();
+
+          emit(state);
         }
       } catch (e) {
         print('something went wrong while loading meme $e');
@@ -61,7 +64,7 @@ class MemeState extends GetxController {
 
   ///function to share the meme
   ///it will download the meme in cache dir of app
-  static Future<void> shareTheMeme({required String memeUrl}) async {
+  Future<void> shareTheMeme({required String memeUrl}) async {
     try {
       String memeName =
           '${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
@@ -88,8 +91,8 @@ class MemeState extends GetxController {
   ///first it will download the img to cache directory
   ///then it  will copy the same file to user selected location
   ///and after that delete the img which was downloaded in cache dir
-  static Future<void> downloadMemeToUserStorage(
-      {required String memeUrl}) async {
+  Future<void> downloadMemeToUserStorage(
+      {required String memeUrl, required BuildContext context}) async {
     //if dir pic is not supported for device
     if (!await FlutterFileDialog.isPickDirectorySupported()) {
       print("Picking directory not supported");
@@ -121,9 +124,20 @@ class MemeState extends GetxController {
         //after the file is saved delete the img from cache dir
         await File(downloadPath).delete();
 
-        //at completion show a Get snackbar
-        Get.snackbar('Meme Downloaded!!', 'Meme Downloaded to Path $path',
-            snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.blue);
+        //at completion show a snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Meme Downloaded!! $path'),
+            backgroundColor: Colors.blue,
+            duration: const Duration(seconds: 2),
+            padding: const EdgeInsets.all(16.0),
+            action: SnackBarAction(
+              label: 'Dismiss',
+              onPressed: () =>
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+            ),
+          ),
+        );
       } catch (e) {
         print('some errorr occurrreddd $e');
       }

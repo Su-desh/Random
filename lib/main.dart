@@ -2,17 +2,17 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random/API/api.dart';
-import 'package:random/chat/conversations/state_conversation.dart';
-import 'package:random/chat/friends/state_friend.dart';
-import 'package:random/chat/new/state_new_user.dart';
-import 'package:random/general/theme.dart';
+import 'package:random/chat/new/cubit/new_user_cubit.dart';
+import 'package:random/general/theme_cubit.dart';
 import 'package:random/home_page.dart';
-import 'package:random/memes/meme_state.dart';
+import 'package:random/memes/cubit/memes_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/signin.dart';
+import 'chat/conversations/cubit/conversation_cubit.dart';
+import 'chat/friends/cubit/friend_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -34,23 +34,8 @@ void main() async {
 ///instance of sharedPreferences
 late SharedPreferences sharedPreferences;
 
-/// instance of newConnect class
-final newConnect = NewConnect();
-
-/// instance of Friend Class
-final friendClass = FriendState();
-
-///instance of conversation class
-final conversationClass = ConversationState();
-
 ///connectivity
 final netConnectivity = Connectivity();
-
-/// instance of memes Class
-final memeState = MemeState();
-
-///theme
-final themeNotifier = ThemeNotifier();
 
 ///First widget to be called from runApp();
 class Random extends StatefulWidget {
@@ -91,25 +76,49 @@ class _RandomState extends State<Random> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ThemeNotifier>(
-      init: themeNotifier,
-      builder: (value) => GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: value.lightMode! ? light_mode : dark_mode,
-        home: Container(
-          color: Colors.transparent,
-          child: StreamBuilder(
-            stream: APIs.firebaseAuth.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return const HomePage();
-              } else {
-                return const SignInScreen();
-              }
-            },
-          ),
+    return MultiBlocProvider(
+      providers: [
+        //theme cubit
+        BlocProvider<ThemeCubit>(
+          create: (BuildContext context) =>
+              ThemeCubit(sharedPreferences: sharedPreferences),
         ),
-      ),
+        //memes cubit
+        BlocProvider<MemesCubit>(
+          create: (BuildContext context) => MemesCubit(),
+        ),
+        //new user cubit
+        BlocProvider<NewUserCubit>(
+          create: (BuildContext context) => NewUserCubit(),
+        ),
+        //friends cubit
+        BlocProvider<FriendCubit>(
+          create: (BuildContext context) => FriendCubit(),
+        ),
+        //conversation cubit
+        BlocProvider<ConversationCubit>(
+          create: (BuildContext context) => ConversationCubit(),
+        ),
+      ],
+      child: BlocBuilder<ThemeCubit, ThemeMode>(builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: context.watch<ThemeCubit>().getThemeData,
+          home: Container(
+            color: Colors.transparent,
+            child: StreamBuilder(
+              stream: APIs.firebaseAuth.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return const HomePage();
+                } else {
+                  return const SignInScreen();
+                }
+              },
+            ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/auth/auth.dart';
 import 'package:random/auth/login.dart';
@@ -73,16 +72,15 @@ class _SignInScreenState extends State<SignInScreen> {
         //after creating new user update online status
         await APIs.updateActiveStatus(true);
         //after success register goto homepage
-        Get.to(const HomePage());
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const HomePage();
+        }));
       } else {
         //error occured
         setState(() {
           isPressedSignin = false;
         });
-        Dialogs.showGetSnackbar(
-          'error !!',
-          message,
-        );
+        Dialogs.showSnackbar(context, message);
       }
     }
   }
@@ -100,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            height: Get.height,
+            height: MediaQuery.of(context).size.height,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
@@ -184,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     !isPressedSignin
                         ? SizedBox(
                             height: 50,
-                            width: Get.width,
+                            width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.deepPurple,
@@ -198,7 +196,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           )
                         : SizedBox(
                             height: 50,
-                            width: Get.width,
+                            width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.deepPurple,
@@ -221,7 +219,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.to(const LogInScreen());
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return const LogInScreen();
+                                }));
                               },
                               child: const Text(
                                 "  LogIn",

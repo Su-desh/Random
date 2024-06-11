@@ -1,14 +1,19 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random/API/api.dart';
 import 'package:random/models/new_connect.dart';
 
-import '../../models/message.dart';
+import '../../../models/message.dart';
+
+part 'state_new_user.dart';
 
 /// New Connect state manager
-class NewConnect extends GetxController {
+class NewUserCubit extends Cubit<NewUserInitial> {
+  NewUserCubit() : super(NewUserInitial());
+
   /// whether this user is connected with new user to chat
   bool isConnected = false;
 
@@ -48,7 +53,8 @@ class NewConnect extends GetxController {
       await endThisConnectedChat();
     }
     showProgressIndicator = true;
-    update();
+    // update();
+    emit(state);
     // set this user searching true
     await updateSearchingField(isSearching: true);
 
@@ -83,7 +89,8 @@ class NewConnect extends GetxController {
 
           isConnected = true;
           showProgressIndicator = false;
-          update();
+          // update();
+          emit(state);
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -100,7 +107,8 @@ class NewConnect extends GetxController {
       await endThisConnectedChat();
     }
     showProgressIndicator = true;
-    update();
+    // update();
+    emit(state);
     // set this user searching true
     await updateSearchingField(isSearching: true);
 
@@ -111,7 +119,8 @@ class NewConnect extends GetxController {
         if (data['i_am_connected_to'] == '') {
           //update my UI when the other person disconnected the chat with me
           isConnected = false;
-          update();
+          // update();
+          emit(state);
         }
         //if i am connected to some user then update UI about that in order to chat with them
         else if (data['i_am_connected_to'] != '') {
@@ -132,7 +141,8 @@ class NewConnect extends GetxController {
 
               isConnected = true;
               showProgressIndicator = false;
-              update();
+              // update();
+              emit(state);
             },
           );
         }
@@ -191,7 +201,8 @@ class NewConnect extends GetxController {
     }
     //UI update
     isConnected = false;
-    update();
+    // update();
+    emit(state);
   }
 
   /// for sending new message in chat

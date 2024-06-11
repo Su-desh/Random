@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                Dialogs.connectWithStranger();
+                Dialogs.connectWithStranger(context: context);
               },
               child: const Text(
                 'Random Search',

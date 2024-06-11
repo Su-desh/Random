@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/conversations/conversation_card.dart';
+import 'package:random/chat/conversations/cubit/conversation_cubit.dart';
 import 'package:random/chat/new/new_conv_card.dart';
 import 'package:random/helper/dialogs.dart';
-
-import '../../main.dart';
 
 /// Widget to show the list of all Conversations
 class ConversationScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
           //show 'anonymous chat listView
           const NewConnectConversationCard(),
           StreamBuilder<QuerySnapshot>(
-            stream: conversationClass.convSnap,
+            stream: context.read<ConversationCubit>().convSnap,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: Text("Loading..."));
@@ -72,7 +72,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Dialogs.connectWithStranger();
+          Dialogs.connectWithStranger(context: context);
         },
         child: const Icon(Icons.add),
       ),
