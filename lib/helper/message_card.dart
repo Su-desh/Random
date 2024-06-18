@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:random/chat/new/add_ended.dart';
 import 'package:random/helper/image.dart';
 
@@ -44,11 +43,11 @@ class _MessageCardState extends State<MessageCard> {
             : Flexible(
                 child: Container(
                   padding: EdgeInsets.all(widget.message.type == Type.image
-                      ? Get.width * 0.03
-                      : Get.width * 0.04),
+                      ? MediaQuery.of(context).size.width * 0.03
+                      : MediaQuery.of(context).size.width * 0.04),
                   margin: EdgeInsets.symmetric(
-                      horizontal: Get.width * 0.04,
-                      vertical: Get.height * 0.01),
+                      horizontal: MediaQuery.of(context).size.width * 0.04,
+                      vertical: MediaQuery.of(context).size.height * 0.01),
                   decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 221, 245, 255),
                       border: Border.all(color: Colors.lightBlue),
@@ -69,7 +68,10 @@ class _MessageCardState extends State<MessageCard> {
                       //show image
                       GestureDetector(
                           onTap: () {
-                            Get.to(ShowImage(imageUrl: widget.message.msg));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ShowImage(imageUrl: widget.message.msg);
+                            }));
                           },
                           child: const Icon(
                             Icons.image,
@@ -82,7 +84,8 @@ class _MessageCardState extends State<MessageCard> {
 
         //message time
         Padding(
-          padding: EdgeInsets.only(right: Get.width * 0.04),
+          padding:
+              EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.04),
           child: Text(
             MyDateUtil.getFormattedTime(
                 context: context, time: widget.message.sent),
@@ -102,7 +105,7 @@ class _MessageCardState extends State<MessageCard> {
         Row(
           children: [
             //for adding some space
-            SizedBox(width: Get.width * 0.04),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.04),
 
             //double tick blue icon for message read
             if (widget.message.read.isNotEmpty)
@@ -128,10 +131,11 @@ class _MessageCardState extends State<MessageCard> {
             : Flexible(
                 child: Container(
                   padding: EdgeInsets.all(widget.message.type == Type.image
-                      ? Get.width * 0.03
-                      : Get.width * 0.04),
+                      ? MediaQuery.of(context).size.width * 0.03
+                      : MediaQuery.of(context).size.width * 0.04),
                   margin: EdgeInsets.symmetric(
-                      horizontal: Get.width * .04, vertical: Get.height * 0.01),
+                      horizontal: MediaQuery.of(context).size.width * .04,
+                      vertical: MediaQuery.of(context).size.height * 0.01),
                   decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 218, 255, 176),
                       border: Border.all(color: Colors.lightGreen),
@@ -152,7 +156,10 @@ class _MessageCardState extends State<MessageCard> {
                       //show image
                       GestureDetector(
                           onTap: () {
-                            Get.to(ShowImage(imageUrl: widget.message.msg));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ShowImage(imageUrl: widget.message.msg);
+                            }));
                           },
                           child: const Icon(
                             Icons.image,

@@ -1,11 +1,8 @@
-// ignore_for_file: public_member_api_docs
-
 import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random/API/api.dart';
 import 'package:random/chat/friends/my_appbar.dart';
@@ -120,7 +117,9 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
                             return ListView.builder(
                                 reverse: true,
                                 itemCount: _list.length,
-                                padding: EdgeInsets.only(top: Get.height * .01),
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        .01),
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return MessageCard(message: _list[index]);
@@ -151,7 +150,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
                 //show emojis on keyboard emoji button click & vice versa
                 if (_showEmoji)
                   SizedBox(
-                    height: Get.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.35,
                     child: EmojiPicker(
                       textEditingController: _textController,
                       config: const Config(
@@ -173,7 +172,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
   Widget _chatInput() {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: Get.height * 0.01, horizontal: Get.width * 0.025),
+          vertical: MediaQuery.of(context).size.height * 0.01, horizontal: MediaQuery.of(context).size.width * 0.025),
       child: Row(
         children: [
           //input field & buttons
@@ -220,7 +219,7 @@ class _ChattingScreenPageState extends State<ChattingScreenPage> {
                           color: Colors.blueAccent, size: 26)),
 
                   //adding some space
-                  SizedBox(width: Get.width * 0.02),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                 ],
               ),
             ),

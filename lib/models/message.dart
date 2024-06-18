@@ -1,6 +1,5 @@
 /// Message model
 class Message {
-  // ignore: public_member_api_docs
   Message({
     required this.toId,
     required this.msg,
@@ -51,5 +50,4 @@ class Message {
   }
 }
 
-// ignore: public_member_api_docs
 enum Type { text, image }

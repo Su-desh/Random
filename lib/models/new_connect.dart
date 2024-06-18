@@ -1,6 +1,5 @@
 /// new connected user Model
 class NewConnectedChatUser {
-  // ignore: public_member_api_docs
   NewConnectedChatUser({
     required this.is_online,
     required this.is_searching_new,

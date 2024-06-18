@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/auth/auth.dart';
 import 'package:random/auth/login.dart';
@@ -73,16 +72,15 @@ class _SignInScreenState extends State<SignInScreen> {
         //after creating new user update online status
         await APIs.updateActiveStatus(true);
         //after success register goto homepage
-        Get.to(const HomePage());
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const HomePage();
+        }));
       } else {
         //error occured
         setState(() {
           isPressedSignin = false;
         });
-        Dialogs.showGetSnackbar(
-          'error !!',
-          message,
-        );
+        Dialogs.showSnackbar(context, message);
       }
     }
   }
@@ -93,8 +91,14 @@ class _SignInScreenState extends State<SignInScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: Get.height,
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/nature.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            height: MediaQuery.of(context).size.height,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
@@ -113,6 +117,11 @@ class _SignInScreenState extends State<SignInScreen> {
                       "Sign In",
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "We care for your privacy, so feel free to use any random username. You don't need to give us your real name.",
+                      style: TextStyle(fontSize: 15),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
@@ -173,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     !isPressedSignin
                         ? SizedBox(
                             height: 50,
-                            width: Get.width,
+                            width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.deepPurple,
@@ -187,7 +196,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           )
                         : SizedBox(
                             height: 50,
-                            width: Get.width,
+                            width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.deepPurple,
@@ -210,7 +219,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.to(const LogInScreen());
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return const LogInScreen();
+                                }));
                               },
                               child: const Text(
                                 "  LogIn",

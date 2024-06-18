@@ -3,7 +3,7 @@ description: A random connect project.
 
 publish_to: 'none'
 
-version: 0.1.0+1
+version: 0.3.3+7
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -11,28 +11,53 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  get: ^4.6.5
-  share_plus: ^7.0.2
+
+  # State management
+  flutter_bloc: ^8.1.5
+
+  #storage 
+  flutter_file_dialog: ^3.0.2
+  
+  # Networking
+  dio: ^5.3.3
+
+  # File management
   image_picker: ^1.0.0
-  firebase_auth: ^4.6.2
-  firebase_core: ^2.13.0
-  store_redirect: ^2.0.1
-  cloud_firestore: ^4.7.1
+
+  # Sharing files
+  share_plus: ^7.0.2
+
+  # Web browsing(privacy policy)
+  webview_flutter: ^4.2.4
+
+  # User interface
   cupertino_icons: ^1.0.2
-  firebase_storage: ^11.2.2
-  shared_preferences: ^2.1.2
-  emoji_picker_flutter: ^1.6.1
-  cached_network_image: ^3.2.3
-  flutter_windowmanager: ^0.2.0
   curved_navigation_bar: ^1.0.3
-  #flutter_background_service: ^5.0.1
-  #flutter_local_notifications: ^15.1.0+1
+
+
+  # Firebase services
+  firebase_auth: ^4.19.1
+  firebase_core: ^2.29.0
+  firebase_storage: ^11.7.1
+  cloud_firestore: ^4.16.1
+
+  # Other
+  store_redirect: ^2.0.1
+  connectivity_plus: ^4.0.2
+  shared_preferences: ^2.1.2
+  path_provider: ^2.1.1
+  emoji_picker_flutter: ^1.6.1
+  cached_network_image: ^3.3.1
+
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.2
 
 flutter:
   uses-material-design: true
+
+  assets:
+  - assets/

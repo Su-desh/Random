@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:random/API/api.dart';
 import 'package:random/auth/auth.dart';
 import 'package:random/home_page.dart';
@@ -67,16 +66,15 @@ class _LogInScreenState extends State<LogInScreen> {
       if (message!.contains('Success')) {
         // update status
         await APIs.updateActiveStatus(true);
-        Get.to(const HomePage());
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const HomePage();
+        }));
       } else {
         //error occured
         setState(() {
           isPressedlogin = false;
         });
-        Dialogs.showGetSnackbar(
-          'error !!',
-          message,
-        );
+        Dialogs.showSnackbar(context, message);
       }
     }
   }
@@ -87,8 +85,14 @@ class _LogInScreenState extends State<LogInScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: Get.height,
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/nature.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            height: MediaQuery.of(context).size.height,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
@@ -171,7 +175,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     !isPressedlogin
                         ? SizedBox(
                             height: 50,
-                            width: Get.width,
+                            width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.deepPurple,
@@ -185,7 +189,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           )
                         : SizedBox(
                             height: 50,
-                            width: Get.width,
+                            width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.deepPurple,
@@ -208,7 +212,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.back();
+                                Navigator.pop(context);
                               },
                               child: const Text(
                                 "  SignIn",

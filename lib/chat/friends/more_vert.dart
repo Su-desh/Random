@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random/API/api.dart';
-import 'package:random/main.dart';
 
 import 'chatting_screen.dart';
 import '../../models/chat_user.dart';
+import 'cubit/friend_cubit.dart';
 
 ///Widget which will be shown when the user click on 3 dots present on friend card
 class FriendMoreVert extends StatelessWidget {
@@ -17,7 +17,7 @@ class FriendMoreVert extends StatelessWidget {
 
 //function to remove the user from friend list
 //it will also remove our name from thier friend list
-  Future<void> _removeFromFriendList() async {
+  Future<void> _removeFromFriendList(BuildContext context) async {
     //remove from loggedin user friend list
     List<dynamic> otherUserUId = [chat_user.user_UID];
     await APIs.firestoreDB
@@ -26,10 +26,12 @@ class FriendMoreVert extends StatelessWidget {
         .update({'friends_list': FieldValue.arrayRemove(otherUserUId)});
 
     //local changes
-    friendClass.friendUIdList
+    context
+        .read<FriendCubit>()
+        .friendUIdList
         .removeWhere((element) => element == otherUserUId[0]);
-    friendClass.update();
-    Get.back();
+
+    Navigator.pop(context);
 
     //remove from other user friend list(current user uid)
     List<dynamic> myUId = [APIs.user.uid];
@@ -42,7 +44,7 @@ class FriendMoreVert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Get.size.width * 1,
+      width: MediaQuery.of(context).size.width * 1,
       height: 200,
       child: Column(
         children: [
@@ -69,12 +71,16 @@ class FriendMoreVert extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Get.back();
-              Get.to(ChattingScreenPage(user: chat_user));
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ChattingScreenPage(user: chat_user);
+              }));
             },
           ),
           GestureDetector(
-            onTap: _removeFromFriendList,
+            onTap: () {
+              _removeFromFriendList(context);
+            },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
@@ -95,7 +101,7 @@ class FriendMoreVert extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Get.back();
+              Navigator.pop(context);
             },
           )
         ],

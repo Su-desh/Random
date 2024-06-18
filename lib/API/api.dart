@@ -84,20 +84,24 @@ class APIs {
   }
 
   ///! very important func , used to genereate DOCUMENT id for chat
-  static String getConversationID(String id) {
+  static String? getConversationID(String id) {
     String currentUserId = user.uid;
     String chatWithUserId = id;
     //both user UID will be compared and smaller id will be first
     //with a _ and second id
     //eg smallerUID_greaterUID
     int result = currentUserId.compareTo(chatWithUserId);
-    //both UID will never be equal, so no need of third conditon
+
     if (result < 0) {
       print('"$currentUserId" is less than "$chatWithUserId".');
       return '${currentUserId}_$chatWithUserId';
-    } else {
+    } else if (result > 0) {
       print('"$currentUserId" is greater than "$chatWithUserId".');
       return '${chatWithUserId}_$currentUserId';
+    } else {
+      //either the chatWith id is same as current user or
+      // that id value is null
+      return null;
     }
   }
 
